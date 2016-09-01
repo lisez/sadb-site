@@ -16,6 +16,12 @@ RewriteEngine On
 RewriteBase /
 RewriteOptions MaxRedirects=10
 
+#維護模式
+RewriteCond %{REQUEST_URI} !^/maintaining\.html$
+RewriteCond %{REMOTE_ADDR} !^111\.240\.164\.57$
+RewriteRule ^(.*)$ maintaining.html [R=307,L]
+
+
 RewriteRule ^bosstime/ bosstime.php [NC,L]
 RewriteRule ^pets-([0-9]+)/? singlepetsinfo.php?petsid=$1 [NC,L]
 
