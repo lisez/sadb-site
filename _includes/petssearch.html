@@ -1,41 +1,66 @@
+<script type="text/javascript" src="{{ "/js/getURLTag.js" | prepend: site.baseurl }}"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-	$("a.petssearch").click(function(){
-		var testurl='{{ "/pets-" | prepend: site.baseurl }}';
-		var txt = ['首領','普通','高級','稀有','英雄','傳說'];
-		var term = txt.indexOf($(this).text());
+	<!-- 寵物種類篩選-->
+	function petsFilter(type) {
+		<!-- 寵物種類索引 -->
+		var typeTxt		= ['首領','普通','高級','稀有','英雄','傳說'];
+		var typeTerm	= typeTxt.indexOf(type);
+		var dbFile		=	'/requirepets.php';
+		var urlOnline = '{{ "/pets-" | prepend: site.baseurl }}';
+		//var testurl		= '/sadb-stie/pets-';
+
+		<!-- 清空顯示頁面 -->
 		$("#pets_content").empty();
-		$.getJSON('{{ "/requirepets.php" | prepend: site.baseurl }}')
+
+		<!-- 呼叫JSON -->
+		$.getJSON(dbFile)
 			.done(function(json){
+				<!-- 篩選資料-->
 				var data = $.grep(json, function(k,v){
-					return JSON.parse(k.r)===term;
+					return JSON.parse(k.r)===typeTerm;
 				});
 
+				<!-- 顯示資料-->
 				$.each(data, function(i,v){
 					if(v.c!=''){
 					var row=$("<a>").attr({
 						"href":testurl+v.i+'/',
 						"title":v.n})
-					.append($("<img>").attr({"src":"http://i.imgbox.com/"+v.c,"class":"img-circle","style":"width:90px;margin:5px 5px 5px 5px;"}));
+					.append($("<img>").attr({
+						"src":"http://i.imgbox.com/"+v.c,
+						"class":"img-circle",
+						"style":"width:90px;margin:5px 5px 5px 5px;"}));
 
 					row.appendTo("#pets_content");
 					}
 				});
 			})
+
+			<!-- 連線錯誤時-->
 			.fail(function(j,s,e) {
 				var err = s + ", " + e;
 				console.log( "Request Failed: " + err );
 			});
+	}
+
+$(document).ready(function(){
+
+	var type=getParameterByBookMark('type');
+	petsFilter(type);
+
+	$("a.petssearch").click(function(){
+		petsFilter(this.innerText);
 	});
+
 });
 </script>
 <div class="container page" style="text-align:center;">
 	<ul class="nav nav-tabs">
-		<li><a data-toggle="tab" href="#5" class="petssearch">傳說</a></li>
-		<li><a data-toggle="tab" href="#4" class="petssearch">英雄</a></li>
-		<li><a data-toggle="tab" href="#3" class="petssearch">稀有</a></li>
-		<li><a data-toggle="tab" href="#2" class="petssearch">高級</a></li>
-		<li><a data-toggle="tab" href="#1" class="petssearch">普通</a></li>
+		<li><a data-toggle="tab" href="#type=傳說" class="petssearch">傳說</a></li>
+		<li><a data-toggle="tab" href="#type=英雄" class="petssearch">英雄</a></li>
+		<li><a data-toggle="tab" href="#type=稀有" class="petssearch">稀有</a></li>
+		<li><a data-toggle="tab" href="#type=高級" class="petssearch">高級</a></li>
+		<li><a data-toggle="tab" href="#type=普通" class="petssearch">普通</a></li>
 	</ul>
 
 	<div id="pets_content" style="margin-top: 10px;">
