@@ -1,69 +1,74 @@
 <script type="text/javascript" src="{{ "/js/getURLTag.js" | prepend: site.baseurl }}"></script>
 <script type="text/javascript">
-	<!-- 寵物種類篩選-->
+	/*寵物種類篩選*/
 	function petsFilter(type) {
-		<!-- 寵物種類索引 -->
+		/*寵物種類索引 */
 		var typeTxt		= ['首領','普通','高級','稀有','英雄','傳說'];
 		var typeTerm	= typeTxt.indexOf(type);
 		var dbFile		=	'/requirepets.php';
 		var urlOnline = '{{ "/pets-" | prepend: site.baseurl }}';
-		//var testurl		= '/sadb-stie/pets-';
 
-		<!-- 清空顯示頁面 -->
-		$("#pets_content").empty();
+		/*清空顯示頁面 */
+		$("#pets-content").empty();
 
-		<!-- 呼叫JSON -->
+		/*呼叫JSON */
 		$.getJSON(dbFile)
 			.done(function(json){
-				<!-- 篩選資料-->
+				/*篩選資料*/
 				var data = $.grep(json, function(k,v){
 					return JSON.parse(k.r)===typeTerm;
 				});
 
-				<!-- 顯示資料-->
+				/*顯示資料*/
 				$.each(data, function(i,v){
 					if(v.c!=''){
 					var row=$("<a>").attr({
-						"href":testurl+v.i+'/',
+						"href":urlOnline+v.i+'/',
 						"title":v.n})
 					.append($("<img>").attr({
 						"src":"http://i.imgbox.com/"+v.c,
-						"class":"img-circle",
+						"class":"pets-illus-item img-circle",
 						"style":"width:90px;margin:5px 5px 5px 5px;"}));
 
-					row.appendTo("#pets_content");
-					}
-				});
+					row.appendTo("#pets-content");
+					}});
 			})
 
-			<!-- 連線錯誤時-->
+			/*連線錯誤時*/
 			.fail(function(j,s,e) {
 				var err = s + ", " + e;
 				console.log( "Request Failed: " + err );
 			});
 	}
 
-$(document).ready(function(){
+	/*偵測網址書籤變化*/
+	function callFilter() {
+		var petsURLBookMark=getParameterByBookMark('type');
+		if(petsURLBookMark) petsFilter(petsURLBookMark);
+	}
+	/*接聽*/
+	window.onhashchange = function() {
+		callFilter();
+	};
 
-	var type=getParameterByBookMark('type');
-	petsFilter(type);
-
-	$("a.petssearch").click(function(){
-		petsFilter(this.innerText);
-	});
-
-});
+	$(function(){
+    $(document)
+			.ready(function(){
+			callFilter();}
+			);
+		$(document).tooltip();
+  });
 </script>
 <div class="container page" style="text-align:center;">
 	<ul class="nav nav-tabs">
-		<li><a data-toggle="tab" href="#type=傳說" class="petssearch">傳說</a></li>
-		<li><a data-toggle="tab" href="#type=英雄" class="petssearch">英雄</a></li>
-		<li><a data-toggle="tab" href="#type=稀有" class="petssearch">稀有</a></li>
-		<li><a data-toggle="tab" href="#type=高級" class="petssearch">高級</a></li>
-		<li><a data-toggle="tab" href="#type=普通" class="petssearch">普通</a></li>
+		<li><a href="#type=傳說" class="petssearch">傳說</a></li>
+		<li><a href="#type=英雄" class="petssearch">英雄</a></li>
+		<li><a href="#type=稀有" class="petssearch">稀有</a></li>
+		<li><a href="#type=高級" class="petssearch">高級</a></li>
+		<li><a href="#type=普通" class="petssearch">普通</a></li>
 	</ul>
 
-	<div id="pets_content" style="margin-top: 10px;">
+	<div id="pets-content" style="margin-top: 10px;">
 		<p>點擊上方頁籤選擇</p>
 	</div>
 </div>
