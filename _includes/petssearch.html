@@ -22,15 +22,19 @@
 				/*顯示資料*/
 				$.each(data, function(i,v){
 					if(v.c!=''){
-					var row=$("<a>").attr({
-						"href":urlOnline+v.i+'/',
-						"title":v.n})
-					.append($("<img>").attr({
-						"src":"http://i.imgbox.com/"+v.c,
-						"class":"pets-illus-item img-circle",
-						"style":"width:90px;margin:5px 5px 5px 5px;"}));
+						var row=$('<div>').attr({'class':'col-xs-3 col-md-2','style':'text-align:center;'});
+						var rowCell=$('<div>').attr({'class':'pets-item','style':'background-image:url(http://i.imgbox.com/'+v.c+');background-size:100px;'});
+						var rowInfo=$('<div>').attr({'class':'pets-item-info'});
+						var rowSrc=$('<a>').attr({
+							"href":urlOnline+v.i+'/',
+							"title":v.n}).text(v.n);
+						var rowTxt=$('<p>');
 
-					row.appendTo("#pets-content");
+						row.append(rowCell);
+						rowCell.append(rowInfo);
+						rowInfo.append(rowTxt);
+						rowTxt.append(rowSrc);
+						row.appendTo("#pets-content");
 					}});
 			})
 
@@ -56,7 +60,6 @@
 			.ready(function(){
 			callFilter();}
 			);
-		$(document).tooltip();
   });
 </script>
 <div class="container page" style="text-align:center;">
