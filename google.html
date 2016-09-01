@@ -1,0 +1,29 @@
+---
+layout: default
+title: "Google本站搜尋"
+---
+
+<style>
+#___gcse_0{all:unset;}
+.gsc-search-button, .gsc-search-button-v2, .gsc-input, .gsib_a, .gsc-input-box, .gsib_b{all:unset;}
+#gsc-i-id1{all:unset;height:20px;background-color: gray;}
+</style>
+
+<script>
+  (function() {
+    var cx = '001607205196316546641:d_lm9rolpnu';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+
+{% include intro.html %}
+<section class="post-list">
+  <div class="container">
+    <div style="all:unset"><gcse:search></gcse:search></div>
+  </div>
+</section>

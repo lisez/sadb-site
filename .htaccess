@@ -1,0 +1,36 @@
+Order Deny,Allow
+Options -Indexes
+#
+ErrorDocument 404 /error.html
+ErrorDocument 401 /error.html
+ErrorDocument 403 /error.html
+#
+DirectoryIndex index.html
+DirectoryIndex index.htm
+DirectoryIndex index.php
+
+RewriteEngine on
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteOptions MaxRedirects=10
+
+RewriteRule ^bosstime/ bosstime.php [NC,L]
+RewriteRule ^pets-([0-9]+)/? singlepetsinfo.php?petsid=$1 [NC,L]
+
+#disable audio
+RewriteRule (.[^\.]).(mp3|mov|ogg|mp4|avi|wmv)$ - [NC,F,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+</IfModule>
+
+RewriteCond %{HTTP_REFERER} !^http://*.lisezdb.com/.*$      [NC]
+RewriteCond %{HTTP_REFERER} !^http://*.lisezdb.com$      [NC]
+RewriteCond %{HTTP_REFERER} !^https://*.lisezdb.com/.*$      [NC]
+RewriteCond %{HTTP_REFERER} !^https://*.lisezdb.com$      [NC]
+RewriteCond %{HTTP_REFERER} !^https://lisezdb.com/.*$      [NC]
+RewriteCond %{HTTP_REFERER} !^https://lisezdb.com$      [NC]
+RewriteCond %{HTTP_REFERER} !^http://lisezdb.com/.*$      [NC]
+RewriteCond %{HTTP_REFERER} !^http://lisezdb.com$      [NC]
+RewriteRule .*\.(jpg|jpeg|gif|png|bmp)$ http://lisezdb.com [R,NC]

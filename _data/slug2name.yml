@@ -1,0 +1,10 @@
+- slug: pets
+  name: '寵物圖鑑'
+- slug: news
+  name: '部落日誌'
+- slug: diary
+  name: '恐龍日記'
+- slug: offical
+  name: '官方資訊'
+- slug: gameinfo
+  name: '遊戲資訊'

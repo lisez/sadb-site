@@ -1,0 +1,44 @@
+<script type="text/javascript">
+$(document).ready(function(){
+	$("a.petssearch").click(function(){
+		var testurl='{{ "/pets-" | prepend: site.baseurl }}';
+		var txt = ['首領','普通','高級','稀有','英雄','傳說'];
+		var term = txt.indexOf($(this).text());
+		$("#pets_content").empty();
+		$.getJSON('{{ "/requirepets.php" | prepend: site.baseurl }}')
+			.done(function(json){
+				var data = $.grep(json, function(k,v){
+					return JSON.parse(k.r)===term;
+				});
+
+				$.each(data, function(i,v){
+					if(v.c!=''){
+					var row=$("<a>").attr({
+						"href":testurl+v.i+'/',
+						"title":v.n})
+					.append($("<img>").attr({"src":"http://i.imgbox.com/"+v.c,"class":"img-circle","style":"width:90px;margin:5px 5px 5px 5px;"}));
+
+					row.appendTo("#pets_content");
+					}
+				});
+			})
+			.fail(function(j,s,e) {
+				var err = s + ", " + e;
+				console.log( "Request Failed: " + err );
+			});
+	});
+});
+</script>
+<div class="container page" style="text-align:center;">
+	<ul class="nav nav-tabs">
+		<li><a data-toggle="tab" href="#5" class="petssearch">傳說</a></li>
+		<li><a data-toggle="tab" href="#4" class="petssearch">英雄</a></li>
+		<li><a data-toggle="tab" href="#3" class="petssearch">稀有</a></li>
+		<li><a data-toggle="tab" href="#2" class="petssearch">高級</a></li>
+		<li><a data-toggle="tab" href="#1" class="petssearch">普通</a></li>
+	</ul>
+
+	<div id="pets_content" style="margin-top: 10px;">
+		<p>點擊上方頁籤選擇</p>
+	</div>
+</div>

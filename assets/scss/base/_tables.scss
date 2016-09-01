@@ -1,0 +1,34 @@
+
+.div-table {display: table;}
+.div-table-tr{display: table-row;}
+.div-table-th{display: table-cell;font-weight: bold;}
+.div-table-td{display: table-cell;}
+
+table,.div-table{
+  border-collapse: collapse;
+  font-feature-settings: "kern", "liga", "tnum";
+  margin: $small-spacing 0;
+  table-layout: fixed;
+  width: 100%;
+}
+
+th,.div-table-th {
+  border-bottom: 1px solid shade($base-border-color, 25%);
+  font-weight: 600;
+  padding: $small-spacing 0;
+  text-align: center;
+}
+
+td,.div-table-td {
+  border-bottom: $base-border;
+  padding: $small-spacing 0;
+}
+
+.div-table-td,
+.div-table-tr,
+.div-table-th,
+tr,
+td,
+th {
+  vertical-align: middle;
+}

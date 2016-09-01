@@ -1,0 +1,85 @@
+
+# SEO settings
+title: "石器"
+title2: "部落"
+description: "提供《石器時代：起源》相關遊戲資料"
+keywords: "Jekyll, blog, web, minimalist, thinkspace, game, 遊戲, 石器時代, StoneAge, Origin, 石器時代起源, 攻略, 스톤 에이지, Netmarble"
+url: https://sadb.lisezdb.com # site url
+#baseurl: "/sadb" # apply repo name if use it under gh-pages branch
+baseurl: null # apply null if repo name is something like username.github.io
+
+google_analytics: UA-80642925-5
+#repo: http://github.com/heiswayi/thinkspace
+#disqus_shortname: "heiswayi"
+#twitter_username: "HeiswayiNrird"
+comments: false
+php: false
+
+# Build settings
+permalink   : /:slug/
+markdown    : kramdown
+highlighter : rouge
+timezone    : Asia/Taipei
+
+source: ./
+destination: /Users/sujingzhong/Box Sync/Workspace/Sites/sadb
+
+#collections
+
+# Sass configuration
+sass:
+  sass_dir: assets/scss
+  style: compressed # expanded
+
+# Author settings
+author:
+  name     : "lisez"
+  email    : mm4324@gmail.com
+  url      : http://blog.lisezdb.com
+
+# social settings
+og_locale: "zh_TW"
+#twitter_card: "summary_large_image"
+#twitter_site: "@HeiswayiNrird"
+
+gems:
+  - bourbon
+  - jekyll-paginate
+  - jekyll-archives
+  - jekyll-sitemap
+
+# navbar pages
+navbar:
+  - slug : about
+    title: About
+  - slug : blog
+    title: Blog
+
+exclude: ["gulp",
+          "node_modules",
+          "bower",
+          "bower_components",
+          "config.rb",
+          "src",
+          "Gemfile",
+          "Gemfile.lock",
+          ".rvmrc",
+          ".rbenv-version",
+          "package.json",
+          "gulpfile.js",
+          "README.md",
+          "Rakefile",
+          "changelog.md"]
+
+#archive
+jekyll-archives:
+  enabled:
+    - categories
+    - tags
+  layout: site-taxs
+  permalinks:
+    year: '/:year/'
+    month: '/:year/:month/'
+    day: '/:year/:month/:day/'
+    tag: '/tag/:name/'
+    category: '/:name/'
