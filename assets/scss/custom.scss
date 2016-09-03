@@ -70,6 +70,14 @@ h1,h2,h3,h4,h5,h6 {
   }
 }
 
+.no-outer-border div{
+  border: unset;
+}
+
+.cp-cell{
+  display: inline-block;
+}
+
 .boss-cell{
   text-align: center;
   margin-bottom: 10px;

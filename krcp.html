@@ -1,0 +1,63 @@
+---
+layout: page
+title: "中韓對照"
+permalink: /krcp/
+---
+
+<script>
+var jsonDB		=	'/js/krtw.json';
+
+function petsFilter(db) {
+  /*呼叫JSON */
+  $.getJSON(db)
+    .done(function(j){
+      /*處理資料*/
+      $.each(j, function(i,v){
+        var row = $('<option>').attr({'value':v.TW});
+        row.text(v.KR);
+
+        $('#selectKRString').append(row);
+      });
+    })
+
+    /*連線錯誤時*/
+    .fail(function(j,s,e) {
+      var err = s + ", " + e;
+      console.log( "Request Failed: " + err );
+    });
+}
+
+$(document).ready(function(){
+  petsFilter(jsonDB);
+  $('#selectKRString').change(function(){
+    $('#displayTWString').text($('#selectKRString').val());
+  });
+});
+</script>
+
+
+<div class="row boss-cell">
+  <div class="col-xs-4 col-md-4"><select id="selectKRString"  style="font-size:14pt;"></select></div>
+  <div class="col-xs-4 col-md-4"><div id="displayTWString"></div></div>
+</div>
+<div class="row no-outer-border">
+  <div class="col-xs-6 col-md-4 boss-cell"><span class="cp-cell kr label">체력</span><span class="cp-cell tw">體力</span></div>
+  <div class="col-xs-6 col-md-4 boss-cell"><span class="cp-cell kr label">공격력</span><span class="cp-cell tw">攻擊力</span></div>
+  <div class="col-xs-6 col-md-4 boss-cell"><span class="cp-cell kr label">방어력</span><span class="cp-cell tw">防禦力</span></div>
+  <div class="col-xs-6 col-md-4 boss-cell"><span class="cp-cell kr label">순발력</span><span class="cp-cell tw">敏捷</span></div>
+  <div class="col-xs-6 col-md-4 boss-cell"><span class="cp-cell kr label">회피율</span><span class="cp-cell tw">閃避率</span></div>
+  <div class="col-xs-6 col-md-4 boss-cell"><span class="cp-cell kr label">명중률</span><span class="cp-cell tw">命中率</span></div>
+  <div class="col-xs-6 col-md-4 boss-cell"><span class="cp-cell kr label">치명타확률</span><span class="cp-cell tw">暴擊率</span></div>
+  <div class="col-xs-6 col-md-4 boss-cell"><span class="cp-cell kr label">치명타 대미지</span><span class="cp-cell tw">暴擊傷害</span></div>
+  <div class="col-xs-12 col-md-4 boss-cell"><span class="cp-cell kr label">치명타 대미지 감소</span><span class="cp-cell tw">暴擊傷害減少</span></div>
+  <div class="col-xs-6 col-md-4 boss-cell"><span class="cp-cell kr label">스턴 저항</span><span class="cp-cell tw">暈眩抵抗</span></div>
+  <div class="col-xs-6 col-md-4 boss-cell"><span class="cp-cell kr label">석화 저항</span><span class="cp-cell tw">石化抵抗</span></div>
+  <div class="col-xs-6 col-md-4 boss-cell"><span class="cp-cell kr label">빙결 저항</span><span class="cp-cell tw">冰結抵抗</span></div>
+  <div class="col-xs-6 col-md-4 boss-cell"><span class="cp-cell kr label">혼란 저항</span><span class="cp-cell tw">混亂抵抗</span></div>
+  <div class="col-xs-6 col-md-4 boss-cell"><span class="cp-cell kr label">수면 저항</span><span class="cp-cell tw">催眠抵抗</span></div>
+  <div class="col-xs-6 col-md-4 boss-cell"><span class="cp-cell kr label">출혈 내성</span><span class="cp-cell tw">出血抗性</span></div>
+  <div class="col-xs-6 col-md-4 boss-cell"><span class="cp-cell kr label">중독 내성</span><span class="cp-cell tw">中毒抗性</span></div>
+  <div class="col-xs-6 col-md-4 boss-cell"><span class="cp-cell kr label">한기 내성</span><span class="cp-cell tw">寒氣抗性</span></div>
+  <div class="col-xs-6 col-md-4 boss-cell"><span class="cp-cell kr label">화상 내성</span><span class="cp-cell tw">灼燒抗性</span></div>
+  <div class="col-xs-6 col-md-4 boss-cell"><span class="cp-cell kr label">감전 내성</span><span class="cp-cell tw">觸電抗性</span></div>
+</div>

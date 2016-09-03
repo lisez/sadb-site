@@ -4,11 +4,11 @@ title: "石器"
 title2: "部落"
 description: "提供《石器時代：起源》相關遊戲資料"
 keywords: "Jekyll, blog, web, minimalist, thinkspace, game, 遊戲, 石器時代, StoneAge, Origin, 石器時代起源, 攻略, 스톤 에이지, Netmarble"
-url: http://sadb.localhost # site url
+url: http://sadb.lisezdb.com # site url
 #baseurl: "/sadb" # apply repo name if use it under gh-pages branch
 baseurl: null # apply null if repo name is something like username.github.io
 
-google_analytics: #UA-80642925-5
+google_analytics: UA-80642925-5
 #repo: http://github.com/heiswayi/thinkspace
 #disqus_shortname: "heiswayi"
 #twitter_username: "HeiswayiNrird"
