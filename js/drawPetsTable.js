@@ -4,60 +4,10 @@
 
 var imgBaseURL = 'http://i.imgbox.com/';
 var imgLoadAry =[];
-var imgTrainer =[
-'rRIqki7A.jpg',
-'I8TxcTvH.jpg',
-'wyU4Bouq.jpg',
-'FylhwTJP.jpg',
-'8XaFsado.jpg',
-'0fOtZA8M.jpg',
-'QLDMQomo.jpg',
-'6TRVhSHR.jpg'];
-
-var imgPets = [
-'VWKYjcSy.jpg',
-'ThS7pvWf.jpg',
-'9HUkSR77.jpg',
-'KaMlgZ6q.jpg',
-'WArTs7xz.jpg',
-'oecyqihL.jpg',
-'O5qa9HFc.jpg'
-/*'Iha5oknj.jpg',
-'AI9AZLtQ.jpg',
-'J3Ov0WmS.jpg',
-'CjCjFx3U.jpg',
-'yP4NmtV0.jpg',
-'XTMOuiey.jpg',
-'d8rJ1Zuf.jpg',
-'LHWzkjcn.jpg',
-'51EMv4Q4.jpg',
-'IpV7vwcR.jpg',
-'jy5C2i7G.jpg',
-'WTdcA1DN.jpg',
-'tRlG2s9i.jpg',
-'7JcAkPor.jpg',
-'XYquhJz7.jpg',
-'xBWERiBB.jpg',
-'PRDkoQGg.jpg',
-'WtDbZfk9.jpg',
-'KPz6jZpg.jpg',
-'1bOr1WBx.jpg',
-'ptEqBI2W.jpg',
-'pN9aPwvA.jpg',
-'btSZtbLM.jpg',
-'m7wbUO7k.jpg',
-'GOsQLUNw.jpg',
-'jao2CpvW.jpg',
-'7pSCc2jh.jpg',
-'tcGVHiKe.jpg',
-'xZE5xXiB.jpg',
-'vDQX7vNH.jpg',
-'hoUpmti4.jpg',
-'xucjS0LO.jpg'*/];
 
 function wherePets(el) {
   if(typeof el=='undefined')el=0;
-  return imgBaseURL+imgPets[el];
+  return imgBaseURL+imgPets[el]+'.jpg';
 }
 
 function whereTrainers(el) {
