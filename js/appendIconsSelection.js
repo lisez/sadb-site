@@ -14,12 +14,21 @@ var teamArray=[
 
 function appendAryImg(url/*isArray*/,fromwhere,pos/*isElementId*/,sel,num){
 
-  var nextPage = $('<div>').attr({'id':'selPoolToNext','class':'gentable-cells'}).append($('<img>').attr({'src':'/assets/images/next.png'}));
-  var prevPage =$('<div>').attr({'id':'selPoolToPrev','class':'gentable-cells'}).append($('<img>').attr({'src':'/assets/images/back.png'}));
+  var selType = $('<select>').attr({'id':'selPoolByType'});
+  var selTypeValue = [0,0,39,117,182,258,284];
+  var selTypeLabel = ['請選擇','傳說','英雄','稀有','高級','普通','新寵物'];
+  for (var i = 0; i < selTypeValue.length; i++) {
+    selType.append(
+      $('<option>').attr({'value':selTypeValue[i]}).append(selTypeLabel[i])
+    );
+  }
+
+  var nextPage = $('<div>').attr({'id':'selPoolToNext','class':'gentable-cells','onclick':'void(0)'}).append($('<img>').attr({'src':'/assets/images/next.png'}));
+  var prevPage =$('<div>').attr({'id':'selPoolToPrev','class':'gentable-cells','onclick':'void(0)'}).append($('<img>').attr({'src':'/assets/images/back.png'}));
 
   if(typeof num=='undefined')num=0;
   $('#'+pos).empty();
-
+  selType.appendTo('#'+pos);
   if((num-20)>=0)prevPage.appendTo('#'+pos);
 
   for (var i = num; i < (num+20); i++) {
@@ -27,11 +36,13 @@ function appendAryImg(url/*isArray*/,fromwhere,pos/*isElementId*/,sel,num){
     var row=$('<div>').attr({
       'class':'gentable-cells '+sel,
       'data-icon-id':i,
+      'onclick':'void(0)',
     });
     var rowCell=$('<img>').attr({
       'name':i,
       'src':imgBaseURL+url[i],
-      'class':'img-rounded img-icon'});
+      'class':'img-rounded img-icon',
+      'onclick':'void(0)'});
     row.append(rowCell);
     row.appendTo('#'+pos);
   }
@@ -45,6 +56,10 @@ function appendAryImg(url/*isArray*/,fromwhere,pos/*isElementId*/,sel,num){
   });
   $('#selPoolToPrev').click(function(){
     appendAryImg(url,fromwhere,pos,sel,(num-20));
+  });
+
+  $('#selPoolByType').change(function(){
+    appendAryImg(url,fromwhere,pos,sel, parseInt($('#selPoolByType').find(':selected').val()));
   });
 }
 
@@ -94,7 +109,7 @@ function addOptions(id, towhere) {
   var button = $('<input>').attr({
     'type':'button',
     'id':'submitOptions',
-    'value':'確認'
+    'value':'確認',
   });
 
   row.append(button);

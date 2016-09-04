@@ -22,7 +22,7 @@
 				/*顯示資料*/
 				$.each(data, function(i,v){
 					if(v.c!=''){
-						var row=$('<div>').attr({'class':'col-xs-3 col-md-2','style':'text-align:center;'});
+						var row=$('<div>').attr({'class':'col-xs-3 col-md-2','style':'text-align:center;','onclick':'void(0)'});
 						var rowCell=$('<div>').attr({'class':'pets-item','style':'background-image:url(http://i.imgbox.com/'+v.c+');background-size:100px;'});
 						var rowInfo=$('<div>').attr({'class':'pets-item-info'});
 						var rowSrc=$('<a>').attr({
@@ -30,10 +30,10 @@
 							"title":v.n}).text(v.n);
 						var rowTxt=$('<p>');
 
-						row.append(rowCell);
+						row.append(rowSrc);
+						rowSrc.append(rowCell);
 						rowCell.append(rowInfo);
 						rowInfo.append(rowTxt);
-						rowTxt.append(rowSrc);
 						row.appendTo("#pets-content");
 					}});
 			})
@@ -64,11 +64,11 @@
 </script>
 <div class="container page" style="text-align:center;">
 	<ul class="nav nav-tabs">
-		<li><a href="#type=傳說" class="petssearch">傳說</a></li>
-		<li><a href="#type=英雄" class="petssearch">英雄</a></li>
-		<li><a href="#type=稀有" class="petssearch">稀有</a></li>
-		<li><a href="#type=高級" class="petssearch">高級</a></li>
-		<li><a href="#type=普通" class="petssearch">普通</a></li>
+		<li><a href="#type=傳說" class="petssearch" onclick="void(0)">傳說</a></li>
+		<li><a href="#type=英雄" class="petssearch" onclick="void(0)">英雄</a></li>
+		<li><a href="#type=稀有" class="petssearch" onclick="void(0)">稀有</a></li>
+		<li><a href="#type=高級" class="petssearch" onclick="void(0)">高級</a></li>
+		<li><a href="#type=普通" class="petssearch" onclick="void(0)">普通</a></li>
 	</ul>
 
 	<div id="pets-content" style="margin-top: 10px;">
