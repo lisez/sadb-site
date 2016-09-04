@@ -3,18 +3,27 @@
 */
 
 var teamArray=[
-  [0,[0,0,0,0]],
-  [0,[0,0,0,0]],
-  [0,[0,0,0,0]],
-  [0,[0,0,0,0]],
-  [0,[0,0,0,0]],
-  [0,[0,0,0,0]],
-  [0,[0,0,0,0]]
+  [-1,[0,0,0,0]],
+  [-1,[0,0,0,0]],
+  [-1,[0,0,0,0]],
+  [-1,[0,0,0,0]],
+  [-1,[0,0,0,0]],
+  [-1,[0,0,0,0]],
+  [-1,[0,0,0,0]]
 ];
 
-function appendAryImg(url/*isArray*/,fromwhere,pos/*isElementId*/,sel){
+function appendAryImg(url/*isArray*/,fromwhere,pos/*isElementId*/,sel,num){
+
+  var nextPage = $('<div>').attr({'id':'selPoolToNext','class':'gentable-cells'}).append($('<img>').attr({'src':'/assets/images/next.png'}));
+  var prevPage =$('<div>').attr({'id':'selPoolToPrev','class':'gentable-cells'}).append($('<img>').attr({'src':'/assets/images/back.png'}));
+
+  if(typeof num=='undefined')num=0;
   $('#'+pos).empty();
-  for (var i = 0; i < url.length; i++) {
+
+  if((num-20)>=0)prevPage.appendTo('#'+pos);
+
+  for (var i = num; i < (num+20); i++) {
+    if(typeof url[i]=='undefined')continue;
     var row=$('<div>').attr({
       'class':'gentable-cells '+sel,
       'data-icon-id':i,
@@ -27,7 +36,16 @@ function appendAryImg(url/*isArray*/,fromwhere,pos/*isElementId*/,sel){
     row.appendTo('#'+pos);
   }
 
+  if((num+20)<url.length)nextPage.appendTo('#'+pos);
+
   doAction(fromwhere);
+
+  $('#selPoolToNext').click(function(){
+    appendAryImg(url,fromwhere,pos,sel,(num+20));
+  });
+  $('#selPoolToPrev').click(function(){
+    appendAryImg(url,fromwhere,pos,sel,(num-20));
+  });
 }
 
 function selectAble(object,selclass,hasornot,limit) {

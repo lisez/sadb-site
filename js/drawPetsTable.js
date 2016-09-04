@@ -6,11 +6,12 @@ var imgBaseURL = 'http://i.imgbox.com/';
 var imgLoadAry =[];
 
 function wherePets(el) {
-  if(typeof el=='undefined')el=0;
+  if(el=='-1')return '/assets/images/none.png';
   return imgBaseURL+imgPets[el]+'.jpg';
 }
 
 function whereTrainers(el) {
+  if(el=='-1')return '/assets/images/none.png';
   return imgBaseURL+imgTrainer[el];
 }
 
