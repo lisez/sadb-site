@@ -1,0 +1,155 @@
+---
+layout: page
+title: "隊伍產生器"
+permalink: /team-generator/
+---
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.0.0/pixi.min.js"></script>
+<style>
+h2{clear:both;}
+.skill-enable{
+  font-weight: bold;
+  color:green;
+}
+.img-icon{
+  width:50px;
+  height:50px;
+}
+.gentable-cells{
+  display: inline-block;
+  text-align:center;
+}
+.teamrow{
+  width:auto;
+  height: auto;
+}
+.general-block{
+  float:left;
+  text-align: center;
+  display: inline-block;
+  border: 1px solid black;
+  width:90px;
+  height:110px;
+  margin:5px;
+  padding:5px;
+}
+.general-block.nouse{
+  border: 0;
+}
+#selectItemsPool{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  clear:both;
+  display: inline-block;;
+}
+#submitBtutonHere{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  clear:both;
+  display: block;
+}
+#skill-list label{
+  float:left;
+}
+input[type="button"]{
+  padding: 20px 20px;
+}
+</style>
+  <div class="row">
+    <ul>
+      <li>點擊下方方塊，下面就會產生寵物圖示列表，再選擇一隻寵物，會產生技能列表。技能選擇上，因為寵物天生必定有主動技能（一技），所以預設不能改變一技。</li>
+      <li>如果沒有選擇任何圖像，將自動載入沒有「任何技能的帖伊諾斯」。</li>
+      <li>因為是從圖床載入圖片，需要有一段載入時間，如果沒有正常顯示圖片，請再次點擊。發生其他問題，請洽管理員！</li>
+      <li>生成圖片後，請自行右鍵另存新檔。</li>
+    </ul>
+  </div>
+  <h2>請點擊下方位置</h2>
+    <div id="teamSettings" class="row">
+      <div class="teamrow">
+        <div id="team-pos-0" class="general-block" data-team-pos="0"><span>前排左</span></div>
+        <div id="team-pos-1" class="general-block" data-team-pos="1"><span>前排中</span></div>
+        <div id="team-pos-2" class="general-block" data-team-pos="2"><span>前排右</span></div>
+      </div>
+      <div class="teamrow">
+        <div id="team-pos-3" class="general-block" data-team-pos="3"><span>騎乘寵物</span></div>
+        <div id="team-pos-6" class="general-block" data-team-pos="6"><span>訓練師</span></div>
+      </div>
+      <div class="teamrow wait">
+        <div id="team-pos-4" class="general-block" data-team-pos="4"><span>待命寵物</span></div>
+        <div id="team-pos-5" class="general-block" data-team-pos="5"><span>待命寵物</span></div>
+      </div>
+    </div>
+    <div id="selectItemsPool" class="row"></div>
+    <div id="submitBtutonHere" class="row"><input id="submitTeamSettings" type="button" value="繪製隊伍配置圖"></div>
+  <h2>隊伍配置圖</h2>
+    <div id="generatorInfo"></div>
+    <div id="petstable"></div>
+  <script src="/js/cleanWebGL.js" type="text/javascript"></script>
+  <script src="/js/drawPetsTable.js" type="text/javascript"></script>
+  <script src="/js/appendIconsSelection.js" type="text/javascript"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+    /*開啟寵物池*/
+    $('.general-block').click(function(){
+      if($(this).data('team-pos')==6){
+        appendAryImg(imgTrainer,$(this).data('team-pos'),'selectItemsPool','selIcon');
+      }else{
+        appendAryImg(imgPets,$(this).data('team-pos'),'selectItemsPool','selIcon');
+      }
+    });
+    /*繪製圖片*/
+    var skillSymbol = ['\u25cb','\u25cf'];/*['\u2610','\u2611'];*/
+    $('#submitTeamSettings').click(function(){
+      cleanWebGL();
+      $('#generatorInfo').empty();
+      $('#petstable').empty();
+      var drawTeam = new drawPetsTable();
+
+      /*處理技能*/
+      var compileSkill = [];
+      for (var q = 0; q < teamArray.length; q++) {
+        var tempary=[];
+        for (var k = 0; k < teamArray[q][1].length; k++) {
+          tempary.push(skillSymbol[teamArray[q][1][k]]);
+        }
+        compileSkill[q]=tempary.join('');
+      }
+
+      /*前排*/
+      for (var i = 0; i < 3; i++) {
+        var getX=drawTeam.marginOuter+(drawTeam.marginInner+drawTeam.imgSize)*i;
+        var getY=drawTeam.marginOuter;
+
+        drawTeam.drawImg(wherePets(teamArray[i][0]),getX,getY);
+        drawTeam.drawText(compileSkill[i],getX+drawTeam.marginInner/2,getY+drawTeam.imgSize,'15px','white');
+      }
+
+      /*後排*/
+      for (var i = 0; i < 2; i++) {
+        var _index=3*i+3;
+        var getX = drawTeam.marginOuter+(drawTeam.marginInner+drawTeam.imgSize)*i+drawTeam.imgOffset;
+        var getY=drawTeam.marginOuter+(drawTeam.marginInner*2.5+drawTeam.imgSize)*1;
+
+        var getImg = (_index==6)?whereTrainers(teamArray[_index][0]):wherePets(teamArray[_index][0]);
+
+        drawTeam.drawImg(getImg,getX,getY);
+        drawTeam.drawText(compileSkill[_index],getX+drawTeam.marginInner/2,getY+drawTeam.imgSize,'15px','white');
+      }
+
+      /*待命*/
+      for (var i = 0; i < 2; i++) {
+        var getX=drawTeam.marginOuter+(drawTeam.marginInner+drawTeam.imgSize)*3+drawTeam.marginInner*2.5;
+        var getY=drawTeam.marginOuter+(drawTeam.marginInner*2.5+drawTeam.imgSize)*i;
+
+        drawTeam.drawImg(wherePets(teamArray[(i+4)][0]),getX,getY);
+        drawTeam.drawText(compileSkill[(i+4)],getX+drawTeam.marginInner/2,getY+drawTeam.imgSize,'15px','white');
+      }
+
+      var totalWidth=drawTeam.marginOuter*2+(drawTeam.marginInner+drawTeam.imgSize)*4+drawTeam.marginInner*2.5;
+      var totalHeight=drawTeam.marginOuter+(drawTeam.marginInner*2.5+drawTeam.imgSize)*2;
+
+      drawTeam.display('petstable',totalWidth,totalHeight);
+    });
+
+  });
+  </script>
