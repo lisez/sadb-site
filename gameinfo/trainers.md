@@ -6,7 +6,7 @@ comments: true
 keywords: ""
 category: gameinfo
 ---
-
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <div class='satrainer container'>
 	<ul class='nav nav-tabs'>
 		<li class='active'><a data-toggle='tab' href='#烏迪'>烏迪</a></li>
