@@ -1,3 +1,7 @@
+/*
+ * sadb.lisezdb.com BY lisez
+*/
+
 var imgBaseURL = 'http://i.imgbox.com/';
 var imgLoadAry =[];
 var imgTrainer =[

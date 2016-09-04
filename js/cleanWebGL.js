@@ -1,3 +1,7 @@
+/*
+ * sadb.lisezdb.com BY lisez
+*/
+
 /*清除webgl*/
 function cleanWebGL() {
   var canvas = document.getElementsByTagName('canvas')[0];

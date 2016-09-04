@@ -1,3 +1,7 @@
+/*
+ * sadb.lisezdb.com BY lisez
+*/
+
 /*常用數值*/
 var basicCol=['hp','atk','def','spd'];
 var theInput=['input','select'];

@@ -1,3 +1,7 @@
+/*
+ * sadb.lisezdb.com BY lisez
+*/
+
 var teamArray=[
   [0,[0,0,0,0]],
   [0,[0,0,0,0]],
