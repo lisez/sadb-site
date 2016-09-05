@@ -36,7 +36,7 @@ $item = IntSafe($_GET['petsid'],0,3);
 $sql = Array(
 sprintf('SELECT * FROM `sadb_pets` AS `t1` INNER JOIN `sadb_pets_ref` AS `t2` ON `t2`.`pets_reaid`=`t1`.`pets_rlid` WHERE `t1`.`pets_id`=%s;', $item),
 
-sprintf('SELECT `pets_id`,`pets_reaid`,`t1`.`pets_name_cht` AS `pets_name_cht`,`t1`.`pets_rarity`,`t1`.`pets_element`,`CHAR` FROM `sadb_pets` AS `t1` INNER JOIN `sadb_pets_ref` AS `t2` ON `t2`.`pets_reaid`=`t1`.`pets_rlid` WHERE (`t1`.`pets_id`= %s) OR (`t1`.`pets_species`= (SELECT `pets_species` FROM `sadb_pets` WHERE `pets_id`= %s AND `t1`.`pets_rarity` != 0 AND `t1`.`pets_element` NOT IN ("地地","水水","火火","風風")));', $item, $item));
+sprintf('SELECT `pets_id`,`pets_reaid`,`t1`.`pets_name_cht` AS `pets_name_cht`,`t1`.`pets_rarity`,`t1`.`pets_element`, `t1`.`pets_max_hp`,`t1`.`pets_max_atk`, `t1`.`pets_max_def`, `t1`.`pets_max_spd`,`ICON` FROM `sadb_pets` AS `t1` INNER JOIN `sadb_pets_ref` AS `t2` ON `t2`.`pets_reaid`=`t1`.`pets_rlid` WHERE (`t1`.`pets_id`= %s) OR (`t1`.`pets_species`= (SELECT `pets_species` FROM `sadb_pets` WHERE `pets_id`= %s AND `t1`.`pets_rarity` != 0 AND `t1`.`pets_element` NOT IN ("地地","水水","火火","風風")));', $item, $item));
 
 /*輸出資料*/
 $sadb_raw = $sadb -> queryMulti(implode($sql,' '));
@@ -219,26 +219,26 @@ $pageTitle=sprintf('%s%s——%s', $thisPet->info['element'], $thisPet->info['sp
                 </div>
                 <div class="div-table-tr">
                   <div class="div-table-th">體力</div>
-                  <div class="div-table-td"><input type="text" class="pet_hp_now"></div>
-                  <div class="div-table-td"><input type="text" class="pet_hp_char" placeholder="±??%"></div>
+                  <div class="div-table-td"><input type="number" class="pet_hp_now"></div>
+                  <div class="div-table-td"><input type="number" class="pet_hp_char" placeholder="±??%"></div>
                   <div class="div-table-td pet_hp_total"></div>
                 </div>
                 <div class="div-table-tr">
                   <div class="div-table-th">攻擊</div>
-                  <div class="div-table-td"><input type="text" class="pet_atk_now"></div>
-                  <div class="div-table-td"><input type="text" class="pet_atk_char" placeholder="±??%"></div>
+                  <div class="div-table-td"><input type="number" class="pet_atk_now"></div>
+                  <div class="div-table-td"><input type="number" class="pet_atk_char" placeholder="±??%"></div>
                   <div class="div-table-td pet_atk_total"></div>
                 </div>
                 <div class="div-table-tr">
                   <div class="div-table-th">防禦</div>
-                  <div class="div-table-td"><input type="text" class="pet_def_now"></div>
-                  <div class="div-table-td"><input type="text" class="pet_def_char" placeholder="±??%"></div>
+                  <div class="div-table-td"><input type="number" class="pet_def_now"></div>
+                  <div class="div-table-td"><input type="number" class="pet_def_char" placeholder="±??%"></div>
                   <div class="div-table-td pet_def_total"></div>
                 </div>
                 <div class="div-table-tr">
                   <div class="div-table-th">敏捷</div>
-                  <div class="div-table-td"><input type="text" class="pet_spd_now"></div>
-                  <div class="div-table-td"><input type="text" class="pet_spd_char" placeholder="±??%"></div>
+                  <div class="div-table-td"><input type="number" class="pet_spd_now"></div>
+                  <div class="div-table-td"><input type="number" class="pet_spd_char" placeholder="±??%"></div>
                   <div class="div-table-td pet_spd_total"></div>
                 </div>
               </div>
@@ -300,12 +300,46 @@ foreach ($_SkillRow as $value) {
 
           <!-- 同系寵物-->
           <div class="row" style="text-align:center;">
-<?php
-foreach ($sadb_raw[1] as $key => $value) {
-  $html='<a href="/pets-%s/"><img src="http://i.imgbox.com/%s"  class="img-circle pets-series-thumbnails"></a>';
-  echo sprintf($html, $value['pets_id'], $value['CHAR']);
-};
-?>
+            <div class="div-table">
+              <!-- pets attributes header -->
+              <div class="div-table-tr">
+                <div class="div-table-th">#</div>
+                <div class="div-table-th">名稱</div>
+                <div class="div-table-th">體力</div>
+                <div class="div-table-th">攻擊</div>
+                <div class="div-table-th">防禦</div>
+                <div class="div-table-th">敏捷</div>
+              </div>
+              <!-- pets data repeat -->
+              <?php
+              foreach ($sadb_raw[1] as $key => $value) {
+                /*except pets*/
+                if($value['pets_name_cht']=='0')continue;
+                /*default HTML theme*/
+                $rowHTML='
+                <div class="div-table-tr">
+                  <div class="div-table-td">%s</div>
+                  <div class="div-table-td">%s</div>
+                  <div class="div-table-td">%s</div>
+                  <div class="div-table-td">%s</div>
+                  <div class="div-table-td">%s</div>
+                  <div class="div-table-td">%s</div>
+                </div>
+                ';
+                /*output HTML code*/
+                $iconHTML='<a href="/pets-%s/"><img src="%s"  class="img-rounded pets-series-thumbnails"></a>';
+                $imageURL=($value['ICON']!=''?'http://i.imgbox.com/'.$value['ICON']:'/assets/images/none.png');
+                $navHTML=sprintf($iconHTML, $value['pets_id'], $imageURL);
+                $fullHTML=sprintf($rowHTML, $navHTML,
+                                            $value['pets_name_cht'],
+                                            $value['pets_max_hp'],
+                                            $value['pets_max_atk'],
+                                            $value['pets_max_def'],
+                                            $value['pets_max_spd']);
+                echo $fullHTML;
+              };
+              ?>
+            </div>
           </div>
         </div>
       </article>
