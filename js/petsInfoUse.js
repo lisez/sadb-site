@@ -65,7 +65,7 @@ function autoCalcTotal() {
   for (var i = 0; i < basicCol.length; i++) {
     var txt= basicCol[i];
     tmpAry[i]=new getPwrVal(txt);
-    window.document.getElementsByClassName('pet_'+txt+'_total')[0].innerHTML = tmpAry[i].total().toLocaleString();
+    window.document.getElementsByClassName('pet_'+txt+'_total')[0].innerHTML = '~'+tmpAry[i].total().toLocaleString();
   };
 };
 
