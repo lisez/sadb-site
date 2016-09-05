@@ -27,8 +27,8 @@
 						var rowInfo=$('<div>').attr({'class':'pets-item-info'});
 						var rowSrc=$('<a>').attr({
 							"href":urlOnline+v.i+'/',
-							"title":v.n}).text(v.n);
-						var rowTxt=$('<p>');
+							"title":v.n});
+						var rowTxt=$('<p>').text(v.n);
 
 						row.append(rowSrc);
 						rowSrc.append(rowCell);
