@@ -1,5 +1,6 @@
 /*
  * sadb.lisezdb.com BY lisez
+ * v1.0.1 @ 20160905
 */
 
 /*常用數值*/

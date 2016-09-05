@@ -115,7 +115,7 @@ $pageTitle=sprintf('%s%s——%s', $thisPet->info['element'], $thisPet->info['sp
   <body>
     <main class="wrapper">
       {% include header.html %}
-  <script language="JavaScript" src="{{ '/js/petsInfoUse.js' | prepend: site.baseurl }}"></script>
+  <script language="JavaScript" src="{{ '/js/petsInfoUse.js?101' | prepend: site.baseurl }}"></script>
   <script language="JavaScript">
     var valStartLV=<?php echo $thisPet->showStartLV();?>;
     var valStart=[<?php echo implode($thisPet->pwr['start'],',');?>];
