@@ -10,9 +10,9 @@ baseurl: null # apply null if repo name is something like username.github.io
 
 google_analytics: UA-80642925-5
 #repo: http://github.com/heiswayi/thinkspace
-#disqus_shortname: "heiswayi"
+disqus_shortname: "sadb-lisezdb"
 #twitter_username: "HeiswayiNrird"
-comments: false
+comments: true
 php: false
 
 # Build settings
@@ -20,11 +20,20 @@ permalink   : /:slug/
 markdown    : kramdown
 highlighter : rouge
 timezone    : Asia/Taipei
+encoding    : "utf-8"
 
 source: ./
 destination: /Users/sujingzhong/Box Sync/Workspace/Sites/sadb
 
 #collections
+
+#defaults
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      comments: true
 
 # Sass configuration
 sass:
@@ -65,6 +74,8 @@ exclude: ["gulp",
           "Gemfile.lock",
           ".rvmrc",
           ".rbenv-version",
+          ".git",
+          ".sass-cache",
           "package.json",
           "gulpfile.js",
           "README.md",

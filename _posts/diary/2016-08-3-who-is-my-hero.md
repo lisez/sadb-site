@@ -2,7 +2,6 @@
 layout: post
 title: "誰是我的英雄"
 description: ""
-comments: false
 keywords: ""
 category: diary
 ---

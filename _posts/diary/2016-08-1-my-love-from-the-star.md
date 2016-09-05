@@ -2,7 +2,6 @@
 layout: post
 title: "來自星星的你"
 description: ""
-comments: false
 keywords: ""
 category: diary
 ---

@@ -2,7 +2,6 @@
 layout: post
 title: "本站轉載方式"
 description: ""
-comments: false
 keywords: ""
 category: news
 ---

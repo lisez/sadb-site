@@ -2,7 +2,6 @@
 layout: post
 title: "討伐首領——海怪利維坦"
 description: ""
-comments: false
 keywords: ""
 category: news
 ---

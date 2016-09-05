@@ -1,6 +1,7 @@
 ---
 layout: compress
 php: "true"
+comments: true
 ---
 
 <?php
@@ -308,6 +309,7 @@ foreach ($sadb_raw[1] as $key => $value) {
           </div>
         </div>
       </article>
+      {% include comments.html %}
       {% include footer.html %}
     </main>
   </body>

@@ -1,7 +1,6 @@
 ---
 layout: post
 title: "本站改版"
-comments: false
 category: news
 ---
 

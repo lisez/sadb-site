@@ -2,7 +2,6 @@
 layout: post
 title: "知天命"
 description: ""
-comments: false
 keywords: ""
 category: diary
 ---

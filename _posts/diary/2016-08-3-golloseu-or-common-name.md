@@ -2,7 +2,6 @@
 layout: post
 title: "골로스？帖拉所伊朵還是古羅索？"
 description: ""
-comments: false
 keywords: ""
 category: diary
 ---
