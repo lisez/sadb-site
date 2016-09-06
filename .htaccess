@@ -1,0 +1,45 @@
+Order Deny,Allow
+Options -Indexes
+#
+ErrorDocument 404 /error.html
+ErrorDocument 401 /error.html
+ErrorDocument 403 /error.html
+#
+DirectoryIndex index.html
+DirectoryIndex index.htm
+DirectoryIndex index.php
+
+RewriteEngine on
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteOptions MaxRedirects=10
+
+#維護模式
+#RewriteCond %{REQUEST_URI} !^/maintaining\.html$
+#RewriteCond %{REMOTE_ADDR} !^111\.240\.190\.167$
+#RewriteCond %{REMOTE_ADDR} !^127\.0\.0\.1$
+#RewriteCond %{REMOTE_ADDR} !^localhost$
+#RewriteRule ^(.*)$ maintaining.html [R=307,L]
+
+
+RewriteRule ^sitemap\.petslink\.xml sitemap.petslink.php [NC,L]
+RewriteRule ^bosstime/ bosstime.php [NC,L]
+RewriteRule ^pets-([0-9]+)/? singlepetsinfo.php?petsid=$1 [NC,L]
+
+#disable audio
+RewriteRule (.[^\.]).(mp3|mov|ogg|mp4|avi|wmv)$ - [NC,F,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+</IfModule>
+
+RewriteCond %{HTTP_REFERER} !^http://*.lisezdb.com/.*$      [NC]
+RewriteCond %{HTTP_REFERER} !^http://*.lisezdb.com$      [NC]
+RewriteCond %{HTTP_REFERER} !^https://*.lisezdb.com/.*$      [NC]
+RewriteCond %{HTTP_REFERER} !^https://*.lisezdb.com$      [NC]
+RewriteCond %{HTTP_REFERER} !^https://lisezdb.com/.*$      [NC]
+RewriteCond %{HTTP_REFERER} !^https://lisezdb.com$      [NC]
+RewriteCond %{HTTP_REFERER} !^http://lisezdb.com/.*$      [NC]
+RewriteCond %{HTTP_REFERER} !^http://lisezdb.com$      [NC]
+RewriteRule .*\.(jpg|jpeg|gif|png|bmp)$ http://lisezdb.com [R,NC]
