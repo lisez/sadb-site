@@ -1,0 +1,4 @@
+sitemap: https://sadb.lisezdb.com/sitemap.xml
+sitemap: https://sadb.lisezdb.com/sitemap.petslink.php
+sitemap: http://sadb.lisezdb.com/sitemap.xml
+sitemap: http://sadb.lisezdb.com/sitemap.petslink.php
