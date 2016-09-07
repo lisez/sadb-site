@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "網站更新通知：iPhone支援BUG修復、留言功能、寵物能力值比較"
+title: "網站更新：iPhone支援BUG修復、留言功能、寵物能力值比較"
 category: news
 ---
 

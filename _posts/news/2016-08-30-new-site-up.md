@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "本站改版"
+title: "網站更新：本站改版"
 category: news
 ---
 

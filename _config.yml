@@ -25,7 +25,8 @@ encoding    : "utf-8"
 source: ./
 destination: "/Users/sujingzhong/Box Sync/Workspace/Sites/sadb"
 
-#collections
+# pagination
+paginate: 10
 
 #defaults
 defaults:

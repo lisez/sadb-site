@@ -8,7 +8,7 @@ title: Home
 
 <section class="post-list">
   <div class="container">
-    {% for post in site.posts %}
+    {% for post in paginator.posts %}
       {% unless post.next %}
         <h2 class="category-title">{{ post.date | date: '%Y' }}</h2>
       {% else %}
@@ -20,12 +20,12 @@ title: Home
       {% endunless %}
       <article class="post-item">
         <span class="post-meta date-label">{{ post.date | date: "%b %d" }}</span>
-        <span class="post-meta date-label">
+        <span class="post-meta date-label"><a href="/{{ post.category | prepend: site.baseurl }}/">
           {% for item in site.data.slug2name %}
           {% if item.slug == post.category %}
             {{item.name}}
           {% endif %}
-        {% endfor %}</span>
+        {% endfor %}</a></span>
         <div class="article-title"><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></div>
       </article>
     {% endfor %}
