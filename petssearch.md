@@ -72,6 +72,10 @@ $(document).ready(function(){
       <label><input name="pets-riding" type="checkbox" value="0" class="petsSearchFilterOptions" />不可騎乘</label>
     </div>
   </div>
+  <div class="div-table-tr">
+    <div class="div-table-td">&nbsp;</div>
+    <div class="div-table-td">請先選擇並點擊下方寵物稀有度頁籤，再行篩選</div>
+  </div>
 </div>
 
 {% include petssearch.html %}
