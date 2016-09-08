@@ -63,7 +63,7 @@
     <!--jQuery-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-    <script type="text/javascript">
+    <script data-cfasync="false" type="text/javascript">
         /*disqus*/
         var disqus_shortname = '{{ site.disqus_shortname }}';
         /*Google*/
@@ -77,17 +77,16 @@
         ga('set', 'anonymizeIP', true);
         ga('set', 'forceSSL', true);
         ga('send', 'pageview');
-        {% if page.google_analytics %}
-        ga('set', '{{ page.google_analytics.group_number }}', '{{ page.google_analytics.group_name }}');
-        {% endif %}
-        /*同文*/
-        var TongWenWFU = {};
-        TongWenWFU.setting = 1;
-        (function () {
-        var url = '{{ '/js/zhCodeChange.js' | prepend: site.baseurl }}',
-        script = document.createElement('script');
-        script.src = url;
-        document.documentElement.firstChild.appendChild(script);
-        } )();
+    </script>
+    <script type="text/javascript">
+      /*同文*/
+      var TongWenWFU = {};
+      TongWenWFU.setting = 1;
+      (function () {
+      var url = '{{ '/js/zhCodeChange.js' | prepend: site.baseurl }}',
+      script = document.createElement('script');
+      script.src = url;
+      document.documentElement.firstChild.appendChild(script);
+      } )();
     </script>
 </head>
