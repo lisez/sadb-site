@@ -30,7 +30,7 @@ $bossTimeDB = new DBMySQL(  $_login -> the_host(),
                             $_login -> the_db());
 
 /*成功連線*/
-$sql = 'SELECT * FROM `sadb_bosstime` AS `main` INNER JOIN `sadb_pets_ref` AS `ref` ON `main`.`boss_pets_rid` = `ref`.`pets_reaid` WHERE DATE(`boss_date`) BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL 14 DAY ORDER BY `boss_date` ASC';
+$sql = 'SELECT * FROM `sadb_bosstime` AS `main` INNER JOIN `sadb_pets_ref` AS `ref` ON `main`.`boss_pets_rid` = `ref`.`pets_reaid` WHERE DATE(`boss_date`) BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL 14 DAY ORDER BY `boss_date` ASC, `boss_time_start` ASC';
 
 /*輸出資料*/
 $bossTimeDB -> query($sql);
@@ -74,7 +74,7 @@ class SingleBossTime
   {
     $code='';
     if($this->img != ''){
-      $code=sprintf('<img src="http://i.imgbox.com/%s" class="img-rounded" style="width:80px;">',$this->img);
+      $code=sprintf('<img src="http://i.imgbox.com/%s" class="img-rounded img-icon-80">',$this->img);
     }
     return $code;
   }
