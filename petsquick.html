@@ -1,0 +1,104 @@
+---
+layout: page
+title: "寵物快查"
+permalink: /petsquick/
+comments: false
+---
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/jquery.dataTables.min.css">
+<script type="text/javascript">
+$(document).ready(function(){
+    var table = $('#pets_query').DataTable({
+        "ajax": '/requirepets2.php',
+        "scrollY": "400px",
+        "paging": false,
+        "pagingType": "full_numbers",
+        "oLanguage": {
+            "sLengthMenu": "",
+            "sZeroRecords": "找不到符合的資料。",
+            "sInfo": "共 _MAX_ 筆",
+            "sSearch": "搜尋",
+            "sInfoFiltered": "找到 _TOTAL_ 筆 資料",
+            "sInfoEmpty": "共 0 頁",
+            "oPaginate": {
+                "sPrevious": "«",
+                "sNext": "»",
+                "sFirst": "第一筆",
+                "sLast": "最後一筆",
+            }
+        }
+    });
+
+    table.column(8).visible(false);
+    table.column(9).visible(false);
+    table.column(10).visible(false);
+    table.column(11).visible(false);
+
+    $('input.toggleornot').change(function(e) {
+        e.preventDefault();
+        var column = table.column( $(this).attr('data-column') );
+        if($(this).prop('checked')==true){
+            column.visible(true);
+        }else{
+            column.visible(false);
+        };
+    } );
+});
+</script>
+
+<table class="table">
+    <tr>
+        <td style="width:6em;">顯示欄位</td>
+        <td>
+            <label class="theoption"><input class="toggleornot" type="checkbox" data-column="0" checked>名稱</label>
+            <label class="theoption"><input class="toggleornot" type="checkbox" data-column="1" checked>屬性</label>
+            <label class="theoption"><input class="toggleornot" type="checkbox" data-column="2" checked>系列</label>
+            <label class="theoption"><input class="toggleornot" type="checkbox" data-column="3" checked>成長率</label>
+            <label class="theoption"><input class="toggleornot" type="checkbox" data-column="4" checked>體成長</label>
+            <label class="theoption"><input class="toggleornot" type="checkbox" data-column="5" checked>攻成長</label>
+            <label class="theoption"><input class="toggleornot" type="checkbox" data-column="6" checked>防成長</label>
+            <label class="theoption"><input class="toggleornot" type="checkbox" data-column="7" checked>敏成長</label>
+            <label class="theoption"><input class="toggleornot" type="checkbox" data-column="8">LV78體力</label>
+            <label class="theoption"><input class="toggleornot" type="checkbox" data-column="9">LV78攻擊</label>
+            <label class="theoption"><input class="toggleornot" type="checkbox" data-column="10">LV78防禦</label>
+            <label class="theoption"><input class="toggleornot" type="checkbox" data-column="11">LV78敏捷</label>
+        </td>
+    </tr>
+</table>
+<div class="table-responsive">
+<table id="pets_query" style="text-align: center;"  class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th >名稱</th>
+        <th >屬性</th>
+        <th >系列</th>
+        <th >成長率</th>
+        <th >體成長</th>
+        <th >攻成長</th>
+        <th >防成長</th>
+        <th >敏成長</th>
+        <th >LV78體力</th>
+        <th >LV78攻擊</th>
+        <th >LV78防禦</th>
+        <th >LV78敏捷</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th >名稱</th>
+        <th >屬性</th>
+        <th >系列</th>
+        <th >成長率</th>
+        <th >體成長</th>
+        <th >攻成長</th>
+        <th >防成長</th>
+        <th >敏成長</th>
+        <th >LV78體力</th>
+        <th >LV78攻擊</th>
+        <th >LV78防禦</th>
+        <th >LV78敏捷</th>
+      </tr>
+    </tfoot>
+</table>
+</div>
