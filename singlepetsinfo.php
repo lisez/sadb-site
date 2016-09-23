@@ -208,9 +208,9 @@ if($twiceElePet['id']!=-1){
     });
   </script>
       <article class="post container" itemscope itemtype="http://schema.org/BlogPosting">
-        <?php echo $twiceEleHTML;?>
+        <!--<?php echo $twiceEleHTML;?>-->
         <header class="post-header">
-          <h1 class="post-title" itemprop="name headline"><!--<?php echo $pageTitle;?>--></h1>
+          <h1 class="post-title" itemprop="name headline"><?php echo $pageTitle;?></h1>
         </header>
         <div class="post-content pets-info" itemprop="articleBody">
           <div class="js-no-script" style='display:block;'>

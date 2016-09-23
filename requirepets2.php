@@ -38,7 +38,7 @@ $jsonFormat = '[%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s]';
 
 foreach ($jsonRows as $key => $value) {
 
-  if($value['pets_name_cht']=="0") continue;
+  if($value['pets_name_cht']==0) continue;
 
   $pets_id    = intval($value['pets_id']);
   $pets_name  = $value['pets_name_cht'];
