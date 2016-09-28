@@ -8,3 +8,5 @@
   name: '官方資訊'
 - slug: gameinfo
   name: '遊戲資訊'
+- slug: sticky
+  name: '置頂文章'
