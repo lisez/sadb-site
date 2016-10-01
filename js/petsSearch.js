@@ -7,7 +7,7 @@ function petsFilter(type) {
   /*寵物種類索引 */
   var typeTxt		= ['首領','普通','高級','稀有','英雄','傳說'];
   var typeTerm	= typeTxt.indexOf(type);
-  var dbFile		=	'/requirepets.php';
+  var dbFile		=	'/requirepets.json';
   var urlOnline = '/pets-';
 
   /*清空顯示頁面 */

@@ -1,6 +1,6 @@
 <?php
 //檔案類型
-header('Content-Type: application/json; charset=utf-8');
+header('Content-Type: application/json; charset=utf-8; Cache-Control: max-age=604800');
 
 //載入設定
 require_once('lib/lqsym.php');
