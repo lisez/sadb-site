@@ -5,6 +5,9 @@ comments: true
 ---
 
 <?php
+/*檔案類型*/
+header('Content-Type:text/html; charset=utf-8');
+
 /*載入設定*/
 require_once('lib/lqsym.php');
 require_once('lib/getpetsinfo.php');
