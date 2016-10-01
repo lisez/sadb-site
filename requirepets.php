@@ -20,7 +20,7 @@ $jsondb = new DBMySQL($_login -> the_host(),
 
 //成功連線
 $jsondbSQL =
-'SELECT `t1`.`pets_id`,`t1`.`pets_name_cht`,`t1`.`pets_rarity`,`t1`.`pets_element`, `t1`.`pets_type`,`t1`.`pets_species`,`t1`.`pets_riding`,`t2`.`CHAR`,`t2`.`PROFILE` FROM `sadb_pets` AS `t1` INNER JOIN `sadb_pets_ref` AS `t2` ON `t2`.`pets_reaid`=`t1`.`pets_rlid` WHERE NOT ( (`t1`.`pets_element` REGEXP "^地地$|^水水$|^火火$|^風風$") OR `t1`.`pets_rarity` = 0);';
+'SELECT `t1`.`pets_id`,`t1`.`pets_name_cht`,`t1`.`pets_rarity`,`t1`.`pets_element`, `t1`.`pets_type`,`t1`.`pets_species`,`t1`.`pets_riding`,`t2`.`CHAR`,`t2`.`PROFILE`,`t2`.`ICON` FROM `sadb_pets` AS `t1` INNER JOIN `sadb_pets_ref` AS `t2` ON `t2`.`pets_reaid`=`t1`.`pets_rlid` WHERE NOT ( (`t1`.`pets_element` REGEXP "^地地$|^水水$|^火火$|^風風$") OR `t1`.`pets_rarity` = 0);';
 $jsondb -> query($jsondbSQL);
 
 //輸出資料
@@ -34,7 +34,7 @@ $jsonCount = $jsondb->getRowsNum();
 $jsonRaw=Array();
 
 // {"i":1,"n":"帖伊諾斯","r":5,"c":"FTfosuIQ","p":"xreqKlWB.jpg"}
-$jsonFormat = '{ "i":%s, "n":%s, "r":%s, "e":%s, "t":%s, "s":%s, "d":%s, "c":%s, "p":%s}';
+$jsonFormat = '{ "i":%s, "n":%s, "r":%s, "e":%s, "t":%s, "s":%s, "d":%s, "c":%s, "p":%s, "o":%s}';
 
 $jsonTxt = preg_replace('/\s/','',$jsonFormat);
 
@@ -49,7 +49,7 @@ foreach ($jsonRows as $key => $value) {
                               'rlid'=>intval($value['pets_rlid']),
 
                               'qty'     =>$value['pets_qty'],
-                              'rarity'  =>$value['pets_rarity'],
+                              'rarity'  =>intval($value['pets_rarity']),
                               'element' =>$value['pets_element'],
                               'type'    =>$value['pets_type'],
                               'species' =>$value['pets_species'],
@@ -58,8 +58,8 @@ foreach ($jsonRows as $key => $value) {
                               //'getloc'  =>strval($value['pets_getloc'])
                             );
   $thisPet -> imgFile = Array(  'char'  => strval($value['CHAR']),
-                                'profile' => strval($value['PROFILE'])
-                                //'icon'  =>strval($value['ICON'])
+                                'profile' => strval($value['PROFILE']),
+                                'icon'  =>strval($value['ICON'])
                               );
 
   array_push($jsonRaw, sprintf($jsonTxt,  JSONChar($thisPet->info['id']),
@@ -70,7 +70,8 @@ foreach ($jsonRows as $key => $value) {
                                           JSONChar($thisPet->info['species']),
                                           JSONChar($thisPet->info['riding']),
                                           JSONChar($thisPet->imgFile['char']),
-                                          JSONChar($thisPet->imgFile['profile'])));
+                                          JSONChar($thisPet->imgFile['profile']),
+                                          JSONChar($thisPet->imgFile['icon'])));
 }
 
 ?>
