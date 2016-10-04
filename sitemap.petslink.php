@@ -10,7 +10,7 @@
   echo $xmlUrlsetHeader;
 
   for ($i=483; $i >=1 ; $i--) {
-    $xmlURL = "<url>\n\t<loc>https://sadb.lisezdb.com/pets-%s/</loc>\n\t<lastmod>2016-09-23T00:00:00+08:00</lastmod>\n</url>\n";
+    $xmlURL = "<url>\n\t<loc>https://sadb.lisezdb.com/pets-%s/</loc>\n\t<lastmod>2016-09-23T00:00:00+08:00</lastmod>\n\t<changefreq>weekly</changefreq>\n\t<priority>0.6</priority>\n</url>\n";
     echo sprintf($xmlURL, $i);
   }
 

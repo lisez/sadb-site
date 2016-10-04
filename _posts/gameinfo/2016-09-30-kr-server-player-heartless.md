@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "韓版玩家——Heartless實況"
-category: news
+category: gameinfo
 ---
 
 [twitch連結](https://www.twitch.tv/victory7777 "twitch連結")

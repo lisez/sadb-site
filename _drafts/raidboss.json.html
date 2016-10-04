@@ -1,0 +1,87 @@
+---
+layout: page
+title: "討伐首領"
+permalink: /raidboss/
+comments: false
+---
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="../js/getURLTag.js"></script>
+<script type="text/javascript" src="../js/processjson.js"></script>
+<script type="text/javascript">
+
+var bossTimeTableAry=[];
+var bossIDAry=[];
+var bossMobsAry=[];
+var petIDAry=[];
+var imgAry=[];
+
+function getPetDataById(petid) {
+	var purePetAry = jQuery.unique(petIDAry);
+	$.getJSON('pets.json')
+		.done(function(JSON){
+			/*take pet by id*/
+			var pet = $.grep(JSON, function(index, value){
+				return purePetAry.indexOf(index.i)!=-1;
+			});
+			/*return HTML code*/
+			$.each(pet, function(index, value){
+				putIntoImgAry(value.i, value.o);
+			});
+		});
+}
+
+function getBossTimeList() {
+	$.getJSON('boss.json').done(function(bossJSON){
+		$.each(bossJSON, function(bossIndex, bossValue){
+			/*boss basic info*/
+			var bossName = bossValue.name;
+			var bossID   = parseInt(bossValue.id);
+			var bossMobs = bossValue.mobs;
+			/*list item*/
+			var bossListItem = $('<li>');
+			var bossListHref = $('<a>').attr({
+				'href':'#'+bossID,
+				'class':'bossSearchClass',
+				'onclick':'void(0)',
+			}).text(bossName);
+			/*put into ary*/
+			bossIDAry.push(bossID);
+
+			for(var i=1;i<=Object.keys(bossMobs).length;i++){
+				if(!bossMobs[i])continue;
+				if(!bossMobsAry[bossID])bossMobsAry[bossID]=[];
+				bossMobsAry[bossID].push(bossMobs[i]);
+				for(var j=0;j<bossMobs[i].length;j++){
+					if(petIDAry.indexOf(bossMobs[i][j])!=-1)continue;
+					petIDAry.push(bossMobs[i][j]);
+				}
+			}
+			/*add to html*/
+			$('#boss-list').append(bossListItem.append(bossListHref));
+		});
+	});
+}
+
+function getBossByID(id) {
+}
+
+
+$(document).ready(function(){
+	getBossTimeList();
+	console.log(bossMobsAry);
+	console.log(petIDAry);
+});
+
+</script>
+
+## 時間表
+
+<div id="boss-schedule">
+</div>
+
+## 關卡資訊
+
+<div id="boss-team">
+	<ul id="boss-list" class="nav nav-tabs"></ul>
+	<div id="boss-team-setting" style="margin-top: 10px;"></div>
+</div>
