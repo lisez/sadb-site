@@ -1,0 +1,114 @@
+<form class="form-horizontal">
+<fieldset>
+  <legend>基本資料</legend>
+
+  <!-- Text input-->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="textinput">提供者</label>  
+    <div class="col-md-4">
+    <input id="textinput" name="textinput" type="text" placeholder="請輸入提供者" class="form-control input-md" required="">
+      
+    </div>
+  </div>
+
+  <!-- Text input-->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="team_name">隊伍名稱</label>  
+    <div class="col-md-4">
+    <input id="team_name" name="team_name" type="text" placeholder="請命名此隊伍組合" class="form-control input-md" required="">
+      
+    </div>
+  </div>
+
+</fieldset>
+
+<!-- Multiple Radios -->
+<fieldset>
+  <legend>適用場合</legend>
+  <div class="form-group">
+    <div class="col-md-4">
+    <div class="radio">
+      <label for="team_type-0">
+        <input type="radio" name="team_type" id="team_type-0" value="1" checked="checked">
+        競技場
+      </label>
+  	</div>
+    <div class="radio">
+      <label for="team_type-1">
+        <input type="radio" name="team_type" id="team_type-1" value="2">
+        冒險
+      </label>
+  	</div>
+    <div class="radio">
+      <label for="team_type-2">
+        <input type="radio" name="team_type" id="team_type-2" value="3">
+        討伐／
+        <span class="col-md-2">
+          <select id="selectbasic" name="selectbasic" class="form-control">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </select>
+        </span>-
+        <span class="col-md-2">
+          <select id="selectbasic" name="selectbasic" class="form-control">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+        </span>
+      </label>
+  	</div>
+    <div class="radio">
+      <label for="team_type-3">
+        <input type="radio" name="team_type" id="team_type-3" value="4">
+        討伐首領／
+        <select id="selectbasic" name="selectbasic" class="form-control"></select>
+      </label>
+  	</div>
+    <div class="radio">
+      <label for="team_type-4">
+        <input type="radio" name="team_type" id="team_type-4" value="5">
+        突襲戰／
+        <select id="selectbasic" name="selectbasic" class="form-control"></select>
+      </label>
+  	</div>
+    <div class="radio">
+      <label for="team_type-5">
+        <input type="radio" name="team_type" id="team_type-5" value="6">
+        部落遠征
+      </label>
+  	</div>
+    </div>
+  </div>
+</fieldset>
+
+<!-- Textarea -->
+<fieldset>
+  <legend>說明介紹</legend>
+  <p>例如介紹配置寵物取得方式、使用說明、應對場合、應對技巧、特殊因應方式等</p>
+  <div class="form-group">
+    <div class="col-md-4">
+      <textarea class="form-control" id="team_about" name="team_about"></textarea>
+      <script src="//cdn.ckeditor.com/4.5.11/basic/ckeditor.js"></script>
+      <script>CKEDITOR.replace('team_about');</script>
+    </div>
+  </div>
+</fieldset>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="team_submit"></label>
+  <div class="col-md-4">
+    <button id="team_submit" name="team_submit" class="btn btn-primary">遞交隊伍</button>
+  </div>
+</div>
+
+
+</form>

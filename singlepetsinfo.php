@@ -382,7 +382,33 @@ foreach ($_SkillRow as $value) {
           </div>
         </div>
       </article>
-      {% include comments.html %}
+      <!-- comments-->
+      <aside id="comments" class="disqus">
+
+        <div class="container">
+          <h3><i class="icon icon-comments-o"></i> 留言回饋</h3>
+          <div id="disqus_thread"></div>
+
+          <script type="text/javascript">
+            var disqus_shortname = '{{ site.disqus_shortname }}';
+            var disqus_identifier = '/pets-<?php echo $thisPet->info['id']?>';
+            var disqus_title = '<?php echo $pageTitle;?>';
+            var disqus_url = '{{ site.url }}/pets-<?php echo $thisPet->info['id']?>';
+            /*var disqus_developer = 1;*/
+
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+          </script>
+
+          <noscript>
+            請啟用 JavaScript，用以瀏覽來自 <a href="https://disqus.com/?ref_noscript" rel="nofollow">Disqus技術支援的留言</a>
+          </noscript>
+        </div>
+
+      </aside>
       {% include footer.html %}
     </main>
   </body>
