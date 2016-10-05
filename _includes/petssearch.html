@@ -1,15 +1,6 @@
-<script type="text/javascript" src="{{ "/js/getURLTag.js" | prepend: site.baseurl }}"></script>
-<script type="text/javascript" src="{{ "/js/petsSearch.js" | prepend: site.baseurl }}"></script>
-<script type="text/javascript">
-	/*接聽*/
-	window.onhashchange = function() {
-		$('input:checkbox').prop('checked',false);
-		callFilter();
-	};
-	$(document).ready(function(){callFilter();});
-</script>
 <div class="container page" style="text-align:center;">
 	<ul class="nav nav-tabs">
+		<li><a href="#type=首領" class="petssearch" onclick="void(0)">首領</a></li>
 		<li><a href="#type=傳說" class="petssearch" onclick="void(0)">傳說</a></li>
 		<li><a href="#type=英雄" class="petssearch" onclick="void(0)">英雄</a></li>
 		<li><a href="#type=稀有" class="petssearch" onclick="void(0)">稀有</a></li>
@@ -21,3 +12,15 @@
 		<p>請選擇上方頁籤</p>
 	</div>
 </div>
+
+<script type="text/javascript" src="/lib/js_pets.js"></script>
+<script type="text/javascript" src="{{ "/js/getURLTag.js" | prepend: site.baseurl }}"></script>
+<script type="text/javascript" src="{{ "/js/petsSearch.v2.js?202" | prepend: site.baseurl }}"></script>
+<script type="text/javascript">
+	/*接聽*/
+	window.onhashchange = function() {
+		$('input:checkbox').prop('checked',false);
+		callFilter();
+	};
+	$(document).ready(function(){callFilter();});
+</script>

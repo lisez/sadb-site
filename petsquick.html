@@ -5,47 +5,7 @@ permalink: /petsquick/
 comments: false
 ---
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/jquery.dataTables.min.css">
-<script type="text/javascript">
-$(document).ready(function(){
-    var table = $('#pets_query').DataTable({
-        "ajax": '/requirepets2.json',
-        "scrollY": "400px",
-        "paging": false,
-        "pagingType": "full_numbers",
-        "oLanguage": {
-            "sLengthMenu": "",
-            "sZeroRecords": "找不到符合的資料。",
-            "sInfo": "共 _MAX_ 筆",
-            "sSearch": "搜尋",
-            "sInfoFiltered": "找到 _TOTAL_ 筆 資料",
-            "sInfoEmpty": "共 0 頁",
-            "oPaginate": {
-                "sPrevious": "«",
-                "sNext": "»",
-                "sFirst": "第一筆",
-                "sLast": "最後一筆",
-            }
-        }
-    });
-
-    table.column(8).visible(false);
-    table.column(9).visible(false);
-    table.column(10).visible(false);
-    table.column(11).visible(false);
-
-    $('input.toggleornot').change(function(e) {
-        e.preventDefault();
-        var column = table.column( $(this).attr('data-column') );
-        if($(this).prop('checked')==true){
-            column.visible(true);
-        }else{
-            column.visible(false);
-        };
-    } );
-});
-</script>
 
 <table class="table">
     <tr>
@@ -102,3 +62,44 @@ $(document).ready(function(){
     </tfoot>
 </table>
 </div>
+
+<script type="text/javascript" src="/js/jslib/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    var table = $('#pets_query').DataTable({
+        "ajax": '/requirepets2.json',
+        "scrollY": "400px",
+        "paging": false,
+        "pagingType": "full_numbers",
+        "oLanguage": {
+            "sLengthMenu": "",
+            "sZeroRecords": "找不到符合的資料。",
+            "sInfo": "共 _MAX_ 筆",
+            "sSearch": "搜尋",
+            "sInfoFiltered": "找到 _TOTAL_ 筆 資料",
+            "sInfoEmpty": "共 0 頁",
+            "oPaginate": {
+                "sPrevious": "«",
+                "sNext": "»",
+                "sFirst": "第一筆",
+                "sLast": "最後一筆",
+            }
+        }
+    });
+
+    table.column(8).visible(false);
+    table.column(9).visible(false);
+    table.column(10).visible(false);
+    table.column(11).visible(false);
+
+    $('input.toggleornot').change(function(e) {
+        e.preventDefault();
+        var column = table.column( $(this).attr('data-column') );
+        if($(this).prop('checked')==true){
+            column.visible(true);
+        }else{
+            column.visible(false);
+        };
+    } );
+});
+</script>

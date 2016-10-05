@@ -37,8 +37,8 @@ $jsonCount = $jsondb->getRowsNum();
 $jsonRaw=Array();
 
 // {"i":1,"n":"帖伊諾斯","r":5,"c":"FTfosuIQ","p":"xreqKlWB.jpg"}
-//$jsonFormat = '{ "i":%s, "n":%s, "r":%s, "e":%s, "t":%s, "s":%s, "d":%s, "c":%s, "p":%s, "o":%s}';
-$jsonFormat = '{ "i":%s, "n":%s, "o":%s}';
+$jsonFormat = '{ "i":%s, "n":%s, "r":%s, "e":%s, "t":%s, "s":%s, "d":%s, "c":%s, "p":%s, "o":%s}';
+//$jsonFormat = '{ "i":%s, "n":%s, "o":%s}';
 
 $jsonTxt = preg_replace('/\s/','',$jsonFormat);
 
@@ -68,13 +68,13 @@ foreach ($jsonRows as $key => $value) {
 
   array_push($jsonRaw, sprintf($jsonTxt,  JSONChar($thisPet->info['id']),
                                           JSONChar($thisPet->name['cht']),
-                                          //JSONChar($thisPet->info['rarity']),
-                                          //JSONChar($thisPet->info['element']),
-                                          //JSONChar($thisPet->info['type']),
-                                          //JSONChar($thisPet->info['species']),
-                                          //JSONChar($thisPet->info['riding']),
-                                          //JSONChar($thisPet->imgFile['char']),
-                                          //JSONChar($thisPet->imgFile['profile']),
+                                          JSONChar($thisPet->info['rarity']),
+                                          JSONChar($thisPet->info['element']),
+                                          JSONChar($thisPet->info['type']),
+                                          JSONChar($thisPet->info['species']),
+                                          JSONChar($thisPet->info['riding']),
+                                          JSONChar($thisPet->imgFile['char']),
+                                          JSONChar($thisPet->imgFile['profile']),
                                           JSONChar($thisPet->imgFile['icon'])));
 }
 
