@@ -393,7 +393,7 @@ foreach ($_SkillRow as $value) {
             var disqus_shortname = '{{ site.disqus_shortname }}';
             var disqus_identifier = '/pets-<?php echo $thisPet->info['id']?>';
             var disqus_title = '<?php echo $pageTitle;?>';
-            var disqus_url = '{{ site.url }}/pets-<?php echo $thisPet->info['id']?>';
+            var disqus_url = '{{ site.url }}/pets-<?php echo $thisPet->info['id']?>/';
             /*var disqus_developer = 1;*/
 
             (function() {
