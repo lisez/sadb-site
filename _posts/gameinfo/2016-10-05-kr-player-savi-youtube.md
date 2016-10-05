@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "韓版玩家——魔人SAVI頻道（廣東話）"
+title: "玩家投稿：魔人SAVI頻道（廣東話）"
 category: gameinfo
 ---
 
