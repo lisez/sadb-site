@@ -4,6 +4,12 @@ title: "寵物外號暱稱匿名別稱別號小名俗名俗稱稱呼"
 category: gameinfo
 ---
 
+<style>
+img{
+    width: 50px;
+    border-radius: 6px;
+}
+</style>
 
 <p>以下是目前常見的寵物暱稱，有些較為不雅的我就不列入了。因為遊戲中圖示都差不多⋯⋯所以就只用第一隻為代表：</p>
 
