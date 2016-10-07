@@ -4,7 +4,6 @@ title: "討伐首領"
 permalink: /bosstime/
 comments: false
 ---
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="../js/getURLTag.js"></script>
 <script type="text/javascript" src="/js/raidboss.js?102"></script>
 <script type="text/javascript" src="/lib/js_raidboss.js?20161007"></script>
