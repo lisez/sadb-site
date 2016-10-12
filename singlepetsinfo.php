@@ -211,6 +211,7 @@ if($twiceElePet['id']!=-1){
     });
   </script>
       <article class="post container" itemscope itemtype="http://schema.org/BlogPosting">
+        <div id="page-topper" class="row">test</div>
         <?php echo $twiceEleHTML;?>
         <header class="post-header">
           <h1 class="post-title" itemprop="name headline"><?php echo $pageTitle;?></h1>
