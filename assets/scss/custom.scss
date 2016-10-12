@@ -1130,10 +1130,78 @@ img {
   border-radius: 50%;
 }
 .img-icon{
+  display: inline-block;
   width:50px;
   height:50px;
 }
+.img-icon-25{
+  display: inline-block;
+  width:25px;
+  height:25px;
+}
 .img-icon-80{
+  display: inline-block;
   width:80px;
   height:80.08px;
+}
+
+/*********************************************************/
+
+.team-set-cell {
+  width: 25%;
+  height: 110px;
+  text-align: center;
+  padding: 10px;
+  display:inline-block;
+}
+
+
+.team-pos-0, .team-pos-1, .team-pos-2, .team-pos-3, .team-pos-4, .team-pos-5, .team-pos-6{
+  position: absolute;
+}
+
+.team-pos-0, .team-pos-1, .team-pos-6{
+  top: 110px;
+}
+
+.team-pos-0, .team-pos-4{
+  left: 50%;
+}
+
+.team-pos-1, .team-pos-2{
+  left: 25%;
+}
+
+.team-pos-3{
+  left: 0;
+}
+
+.team-pos-5, .team-pos-6{
+  left: 75%;
+}
+
+#team-pets{
+  width: auto;
+  height: 220px;
+}
+
+/*********************************************************/
+
+.page-help{
+  border: 2px solid;
+  text-align: justify;
+  font-weight: bold;
+  padding: 10px 10px 10px 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.danger {
+  color: red;
+  border-color: red;
+}
+
+.info {
+  color: $blue-color;
+  border-color: $blue-color;
 }
