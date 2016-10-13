@@ -1,0 +1,136 @@
+---
+layout: page
+title: "隊伍查詢"
+permalink: /team/
+comments: false
+---
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/jquery.dataTables.min.css">
+<style type="text/css">
+.dataTables_filter {
+display: none; 
+}
+</style>
+<div class="row">
+    <p>由於資料庫結構的關係，使用搜尋請參閱下列說明：</p>
+    <table>
+      <thead>
+        <th style="width: 15%;">搜尋項目</th>
+        <th>搜尋代碼</th>
+        <th>範例</th>
+      </thead>
+      <tbody>
+          <tr>
+            <td>冒險(2=)</td>
+            <td>難度代碼：冒險之章(0)、苦難之章(1)、外傳(2)／關卡代碼，例如第八章第四關「8-4」</td>
+            <td>苦難之章第八章第十關，輸入「2=1-8-10」</td>
+          </tr>
+          <tr>
+            <td>討伐(3=)</td>
+            <td>請直接輸入關卡簡稱，例如第八章第四關「8-4」</td>
+            <td>討伐8-4，輸入「3=8-4」</td>
+          </tr>
+          <tr>
+            <td>討伐首領(4=)<br>找寵物(pet=)</td>
+            <td>請輸入本站的寵物代碼，就是寵物圖鑒網址列的數字</td>
+            <td>帖伊諾斯(pets-1)，輸入「pet=1」<br>討伐王奈宇羅(pets-492)，輸入「4=492」</td>
+          </tr>
+          <tr>
+            <td>突襲戰(5=)</td>
+            <td>機暴(0)／地機虎(1)／水機虎(2)／火機虎(3)／風機虎(4)</td>
+            <td>機暴，輸入「5=0」</td>
+          </tr>
+          <tr>
+            <td>找訓練師(ppl=)</td>
+            <td>烏迪(1)／露西(2)／賽菈(3)／卡比(4)／波菲(5)／吉娜(6)／烏巴(7)／艾恩(8)</td>
+            <td>搜尋烏迪，請輸入「ppl=1」</td>
+          </tr>
+        </tbody>
+    </table>
+</div>
+<label style="float:right; margin: 5px 5px 5px 5px;"><a href="suggest/"><img src="/assets/images/file.svg" class="img-icon-25">提供隊伍</a></label></span>
+<label style="float:right; margin: 5px 5px 5px 5px;"><a href="/team-generator/"><img src="/assets/images/picture.svg" class="img-icon-25">隊伍配置圖</a></label></span>
+<select id="searchtype"></select>
+<input type="text" id="searchtext" style="width:100px;">
+<table id="team-list">
+	<thead>
+        <th style="width:10%">#</th>
+		<th style="width:10%">連結</th>
+        <th style="width:15%">提供者</th>
+        <th style="width:15%">適用場合</th>
+        <th>隊伍配置</th>
+	</thead>
+	<tbody></tbody>
+    <tfoot>
+        <th>#</th>
+		<th>連結</th>
+        <th>提供者</th>
+        <th>適用場合</th>
+        <th>隊伍配置</th>
+	</tfoot>
+</table>
+
+<script type="text/javascript" src="/js/jslib/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/lib/js_pets.js"></script>
+<script type="text/javascript" src="/js/savar.js"></script>
+<script type="text/javascript" src="/js/appendPetsImgIcon.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    var TeamType = [
+        {'v':'0=0', 't':'泛用'},
+        {'v':'1=0', 't':'競技場'},
+        {'v':'2=', 't':'冒險'},
+        {'v':'3=', 't':'討伐'},
+        {'v':'4=', 't':'討伐首領'},
+        {'v':'5=', 't':'突襲戰'},
+        {'v':'6=0', 't':'部落遠征'},
+        {'v':'pet=', 't':'找寵物'},
+        {'v':'ppl=', 't':'找訓練師'},
+        ];
+    for(var i=0; i<Object.keys(TeamType).length ; i++){
+        var row = $('<option>').attr('value', TeamType[i]['v']).append(TeamType[i]['t']);
+        $('#searchtype').append(row);
+    }
+    $('#searchtype').prepend($('<option>').attr('value','').append('請選擇'));
+
+    function TeamQueryByType(val) {
+
+        table.search(val).draw();
+    }
+
+    var table = $('#team-list').DataTable({
+    	"processing": true,
+        "serverSide": true,
+        "ajax": '/lib/json_teamlist.php',
+        "scrollY": "400px",
+        "order": [[0, 'DESC']],
+        "paging": 10,
+        "pagingType": "full_numbers",
+        "oLanguage": {
+            "sLengthMenu": "",
+            "sZeroRecords": "找不到符合的資料。",
+            "sInfo": "共 _MAX_ 筆",
+            "sSearch": "搜尋",
+            "sInfoFiltered": "找到 _TOTAL_ 筆 資料",
+            "sInfoEmpty": "共 0 頁",
+            "oPaginate": {
+                "sPrevious": "«",
+                "sNext": "»",
+                "sFirst": "第一筆",
+                "sLast": "最後一筆",
+            }
+        },
+        "drawCallback": function(){loopSpan();}
+    });
+
+    $('#searchtype').bind('change', function(){
+        $('#searchtext').val($(this).val());
+        TeamQueryByType($('#searchtext').val());
+    });
+
+    $('#searchtext').bind('keyup click', function(){
+        TeamQueryByType($(this).val());
+    });
+
+});
+</script>

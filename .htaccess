@@ -14,32 +14,35 @@ RewriteEngine on
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase /
-RewriteOptions MaxRedirects=10
+RewriteOptions MaxRedirects=20
 
 #維護模式
 #RewriteCond %{REQUEST_URI} !^/maintaining\.html$
-#RewriteCond %{REMOTE_ADDR} !^111\.240\.190\.167$
-#RewriteCond %{REMOTE_ADDR} !^127\.0\.0\.1$
 #RewriteCond %{REMOTE_ADDR} !^localhost$
 #RewriteRule ^(.*)$ maintaining.html [R=307,L]
 
+RewriteRule ^pets_([0-9]+)/? pets-$1/? [L,R=301]
 
 RewriteRule ^sitemap\.petslink\.xml sitemap.petslink.php [NC,L]
-RewriteRule ^bosstime/ bosstime.php [NC,L]
+RewriteRule ^requirepets2\.json requirepets2.php [NC,L]
+RewriteRule ^requirepets\.json requirepets.php [NC,L]
 RewriteRule ^pets-([0-9]+)/? singlepetsinfo.php?petsid=$1 [NC,L]
+RewriteRule ^team/([0-9]+)/? /team/teamdetail.php?team=$1.php [NC,L]
+RewriteRule ^lib/js_([A-Za-z0-9]+)\.js /lib/js_$1.php [NC,L]
 
 #disable audio
+RewriteBase /
 RewriteRule (.[^\.]).(mp3|mov|ogg|mp4|avi|wmv)$ - [NC,F,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 </IfModule>
 
-RewriteCond %{HTTP_REFERER} !^http://*.lisezdb.com/.*$      [NC]
-RewriteCond %{HTTP_REFERER} !^http://*.lisezdb.com$      [NC]
-RewriteCond %{HTTP_REFERER} !^https://*.lisezdb.com/.*$      [NC]
-RewriteCond %{HTTP_REFERER} !^https://*.lisezdb.com$      [NC]
-RewriteCond %{HTTP_REFERER} !^https://lisezdb.com/.*$      [NC]
-RewriteCond %{HTTP_REFERER} !^https://lisezdb.com$      [NC]
-RewriteCond %{HTTP_REFERER} !^http://lisezdb.com/.*$      [NC]
-RewriteCond %{HTTP_REFERER} !^http://lisezdb.com$      [NC]
-RewriteRule .*\.(jpg|jpeg|gif|png|bmp)$ http://lisezdb.com [R,NC]
+#RewriteCond %{HTTP_REFERER} !^http://*.lisezdb.com/.*$      [NC]
+#RewriteCond %{HTTP_REFERER} !^http://*.lisezdb.com$      [NC]
+#RewriteCond %{HTTP_REFERER} !^https://*.lisezdb.com/.*$      [NC]
+#RewriteCond %{HTTP_REFERER} !^https://*.lisezdb.com$      [NC]
+#RewriteCond %{HTTP_REFERER} !^https://lisezdb.com/.*$      [NC]
+#RewriteCond %{HTTP_REFERER} !^https://lisezdb.com$      [NC]
+#RewriteCond %{HTTP_REFERER} !^http://lisezdb.com/.*$      [NC]
+#RewriteCond %{HTTP_REFERER} !^http://lisezdb.com$      [NC]
+#RewriteRule .*\.(jpg|jpeg|gif|png|bmp)$ http://lisezdb.com [R,NC]

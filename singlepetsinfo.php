@@ -4,221 +4,34 @@ php: "true"
 comments: true
 ---
 
-<?php
-/*檔案類型*/
-header('Content-Type:text/html; charset=utf-8');
-
-/*載入設定*/
-require_once('lib/lqsym.php');
-require_once('lib/getpetsinfo.php');
-require_once('lib/defines.php');
-
-ini_set('display_errors', '0');
-error_reporting(E_ALL | E_STRICT);
-
-/*檢查效能*/
-$pageTimer = new PageBenchMark;
-$pageTimer->Start();
-
-/* ########################################
- * 載入資料庫
-######################################## */
-
-/*設定連線*/
-$_login = new DBLogin(DB_MYSQL_HOST, DB_MYSQL_USER, DB_MYSQL_PW, DB_MYSQL_DB);
-
-/*建立連線*/
-$sadb = new DBMySQL(  $_login -> the_host(),
-                      $_login -> the_user(),
-                      $_login -> the_pw(),
-                      $_login -> the_db());
-
-/*成功連線*/
-$item = IntSafe($_GET['petsid'],0,3);
-
-$sql = Array(
-sprintf('SELECT * FROM `sadb_pets` AS `t1` INNER JOIN `sadb_pets_ref` AS `t2` ON `t2`.`pets_reaid`=`t1`.`pets_rlid` WHERE `t1`.`pets_id`=%s;', $item),
-
-sprintf('SELECT `pets_id`,`pets_reaid`,`t1`.`pets_name_cht` AS `pets_name_cht`,`t1`.`pets_rarity`,`t1`.`pets_element`, `t1`.`pets_max_hp`,`t1`.`pets_max_atk`, `t1`.`pets_max_def`, `t1`.`pets_max_spd`,`ICON` FROM `sadb_pets` AS `t1` INNER JOIN `sadb_pets_ref` AS `t2` ON `t2`.`pets_reaid`=`t1`.`pets_rlid` WHERE (`t1`.`pets_id`= %s) OR (`t1`.`pets_species`= (SELECT `pets_species` FROM `sadb_pets` WHERE `pets_id`= %s AND `t1`.`pets_rarity` != 0));', $item, $item));
-
-/*輸出資料*/
-$sadb_raw = $sadb -> queryMulti(implode($sql,' '));
-$sadb_row = $sadb_raw[0][0];
-
-/*$sadb_row = $sadb->getData('MYSQLI_ASSOC');*/
-
-/* ########################################
- * 處理寵物資料
-######################################## */
-
-/*格式化寵物資料*/
-$thisPet = new GetPetsInfo;
-$thisPet -> name = Array(   'cht' =>strval($sadb_row['pets_name_cht']),
-                            'kr'  =>strval($sadb_row['pets_name_kr'])
-                          );
-$thisPet -> info = Array(
-                            'id'  =>intval($sadb_row['pets_id']),
-                            'rlid'=>intval($sadb_row['pets_rlid']),
-
-                            'qty'     =>$sadb_row['pets_qty'],
-                            'rarity'  =>$sadb_row['pets_rarity'],
-                            'element' =>$sadb_row['pets_element'],
-                            'type'    =>$sadb_row['pets_type'],
-                            'species' =>$sadb_row['pets_species'],
-                            'riding'  =>boolval($sadb_row['pets_riding']),
-                            'icon'    =>$sadb_row['pets_icon'],
-                            'getloc'  =>strval($sadb_row['pets_getloc'])
-                          );
-$thisPet -> imgFile = Array(  'char'  => strval($sadb_row['CHAR']),
-                              'profile' => strval($sadb_row['PROFILE']),
-                              'icon'  =>strval($sadb_row['ICON'])
-                            );
-$thisPet -> pwr['min'] = Array(
-                              'hp'  => $sadb_row['pets_min_hp'],
-                              'atk' => $sadb_row['pets_min_atk'],
-                              'def' => $sadb_row['pets_min_def'],
-                              'spd' => $sadb_row['pets_min_spd']
-                              );
-$thisPet -> pwr['max'] = Array(
-                              'hp'  => $sadb_row['pets_max_hp'],
-                              'atk' => $sadb_row['pets_max_atk'],
-                              'def' => $sadb_row['pets_max_def'],
-                              'spd' => $sadb_row['pets_max_spd']
-                              );
-$thisPet -> pwr['start'] = Array(
-                              'hp'  => $sadb_row['HP'],
-                              'atk' => $sadb_row['ATK'],
-                              'def' => $sadb_row['DEF'],
-                              'spd' => $sadb_row['SPD'],
-                                );
-$thisPet -> pwr['lv'] = $sadb_row['LV'];
-$thisPet -> skill['active'] = Array(
-                              'name'=>$sadb_row['pets_skill_name'],
-                              'cost'=>$sadb_row['pets_skill_cost'],
-                              'desc'=>$sadb_row['pets_skill_desc'],
-                              'eft'=>$sadb_row['pets_skill_eft']);
-$thisPet -> skill['pas1'] = Array(
-                              /*'icon'=>$sadb_row['pets_pas_1_icon'],*/
-                              'name'=>$sadb_row['pets_pas_1_name'],
-                              'eft'=>$sadb_row['pets_pas_1_eft']);
-$thisPet -> skill['pas2'] = Array(
-                              /*'icon'=>$sadb_row['pets_pas_2_icon'],*/
-                              'name'=>$sadb_row['pets_pas_2_name'],
-                              'eft'=>$sadb_row['pets_pas_2_eft']);
-$thisPet -> skill['pas3'] = Array(
-                              /*'icon'=>$sadb_row['pets_pas_3_icon'],*/
-                              'name'=>$sadb_row['pets_pas_3_name'],
-                              'eft'=>$sadb_row['pets_pas_3_eft']);
-
-$pageTitle=sprintf('%s%s——%s', $thisPet->info['element'], $thisPet->info['species'],$thisPet->showName('cht'));
-
-/*處理同系列寵物資料*/
-$twiceElePet=Array(
-  'id'=> -1,
-  'label'=>''
-);
-$fullSeresPetsHTML='';
-foreach ($sadb_raw[1] as $key => $value) {
-  /*except pets*/
-  if($value['pets_name_cht']=='0') continue;
-  /*handle twice element*/
-  $skipPetsElement = Array('地地','水水','火火','風風');
-  if(
-  mb_strlen($thisPet->info['element'],'utf-8')==1 && preg_match('/('.$thisPet->info['element'].')\1/',$value['pets_element']))
-  {
-    $twiceElePet['id']    = $value['pets_id'];
-    $twiceElePet['label'] = $value['pets_element'];
-  }
-  if(in_array($value['pets_element'],$skipPetsElement)) continue;
-  /*detect this id*/
-  $assignPointer='';
-  if($value['pets_reaid']==$thisPet->info['rlid']){
-    $assignPointer='today';
-  }
-  /*default HTML theme*/
-  $rowHTML='
-  <div class="div-table-tr %s">
-    <div class="div-table-td">%s</div>
-    <div class="div-table-td">%s</div>
-    <div class="div-table-td">%s</div>
-    <div class="div-table-td">%s</div>
-    <div class="div-table-td">%s</div>
-    <div class="div-table-td">%s</div>
-    <div class="div-table-td">%s</div>
-  </div>
-  ';
-  /*output HTML code*/
-  $iconHTML='<a href="/pets-%s/"><img src="%s"  class="img-rounded pets-series-thumbnails"></a>';
-  $imageURL=($value['ICON']!=''?'http://i.imgbox.com/'.$value['ICON']:'/assets/images/none.png');
-  $navHTML=sprintf($iconHTML, $value['pets_id'], $imageURL);
-  $fullHTML=sprintf($rowHTML, $assignPointer,
-                              $navHTML,
-                              $value['pets_name_cht'],
-                              round($value['pets_max_hp']/5+$value['pets_max_atk']+$value['pets_max_def']+$value['pets_max_spd'],3),
-                              $value['pets_max_hp'],
-                              $value['pets_max_atk'],
-                              $value['pets_max_def'],
-                              $value['pets_max_spd']);
-  $fullSeresPetsHTML.=$fullHTML;
-};
-
-/*處理雙屬性寵物資料*/
-$twiceEleHTML='';
-if($twiceElePet['id']!=-1){
-  $twiceEleHTML=sprintf('<span class="boss-cell" style="float:right;"><a href="/pets-%s">查詢雙屬性</a></span>',$twiceElePet['id']);
-}
-?>
+<?php include_once('lib/inc_singlepet.php');?>
+<?php include_once('lib/inc_comments.php');?>
 <!DOCTYPE html>
 <html>
   {% include head.html %}
   <body>
     <main class="wrapper">
       {% include header.html %}
-  <script language="JavaScript" src="{{ '/js/petsInfoUse.js' | prepend: site.baseurl }}"></script>
-  <script language="JavaScript">
-    /*claim pets data*/
-    var valStartLV=<?php echo $thisPet->showStartLV();?>;
-    var valStart=[<?php echo implode($thisPet->pwr['start'],',');?>];
-    var valMin=[<?php echo implode($thisPet->pwr['min'],',');?>];
-    var valMax=[<?php echo implode($thisPet->pwr['max'],',');?>];
-
-    window.addEventListener('load',function(){
-      /*偵測有無支援JS*/
-      indisplayNoJSAlert('js-no-script');
-
-      /*自動帶入最大值*/
-      insertVal(<?php echo implode($thisPet->pwr['max'],',');?>);
-
-      /*自動全選輸入欄*/
-      autoSelectInput();
-
-      /*自動計算*/
-      hookInputChange();
-
-      /*偵測選單改變*/
-      window.document.getElementsByClassName('pet_pwr_now')[0].addEventListener('change', function(){
-        var chk = document.getElementsByClassName('pet_pwr_now')[0].value;
-        /*依據選擇類型改變*/
-        switch (chk) {
-          case 'max':
-            insertVal(valMax[0],valMax[1],valMax[2],valMax[3]);
-            break;
-          case 'min':
-            insertVal(valMin[0],valMin[1],valMin[2],valMin[3]);
-            break;
-        };
-      });
-    });
-  </script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/css/jquery.dataTables.min.css">
+      <style type="text/css">
+      .dataTables_filter {
+      display: none; 
+      }
+      </style>
       <article class="post container" itemscope itemtype="http://schema.org/BlogPosting">
-        <div id="page-topper" class="row">test</div>
+        <div id="page-topper" class="row"></div>
         <?php echo $twiceEleHTML;?>
+        <span class="boss-cell" style="float:right;"><a href="/team/suggest/">提供隊伍</a></span>
         <header class="post-header">
           <h1 class="post-title" itemprop="name headline"><?php echo $pageTitle;?></h1>
         </header>
         <div class="post-content pets-info" itemprop="articleBody">
-          <div class="js-no-script" style='display:block;'>
+          <div class="row page-help danger js-no-script" style='display:block;'>
             <p>JavaScript無法正常啟用，將影響本頁部分內容顯示。請檢查是否有使用AdBlock等影響有JavaScript功能之擴充功能，或者升級瀏覽器至最新版本。如仍無法解決此問題，請洽本站管理員。</p>
+          </div>
+          <div class="row page-help info">
+            <p>計算機數值，因為採用圖鑑回推法，計算上會與實際數值有7-11之誤差。</p>
+            <p>技能說明為由韓文翻譯，如果有與實際遊戲中效果，或官方說明有所出入者，敬請告知。</p>
           </div>
           <div class="row">
             <!-- pet image-->
@@ -362,56 +175,134 @@ foreach ($_SkillRow as $value) {
 
           <!-- same series pets-->
           <div class="row" style="text-align:center;">
-            <div class="div-table" id="petsSeries">
-              <!-- pets attributes header -->
-              <div style="display:table-header-group;">
-                <div class="div-table-tr">
-                  <div class="div-table-th">#</div>
-                  <div class="div-table-th">名稱</div>
-                  <div class="div-table-th">成長率</div>
-                  <div class="div-table-th">體力</div>
-                  <div class="div-table-th">攻擊</div>
-                  <div class="div-table-th">防禦</div>
-                  <div class="div-table-th">敏捷</div>
-                </div>
-              </div>
-              <div style="display:table-row-group;">
-              <!-- pets data repeat -->
-              <?php echo $fullSeresPetsHTML; ?>
-              </div>
-            </div>
-          </div>
+            <hr>
+            <table id="petsSeries">
+              <thead>
+                <th style="width:51px;">#</th>
+                <th>名稱</th>
+                <th>成長率</th>
+                <th>體力</th>
+                <th>攻擊</th>
+                <th>防禦</th>
+                <th>敏捷</th>
+              </thead>
+              <tbody>
+                <?php echo $fullSeresPetsHTML; ?>
+              </tbody>
+            </table>
+        </div>
+        <!-- team suggest-->
+        <div class="row">
+          <hr>
+          <table id="team-list">
+            <thead>
+              <th style="width:10%">#</th>
+              <th style="width:10%">連結</th>
+              <th style="width:15%">提供者</th>
+              <th style="width:15%">場合</th>
+              <th>隊伍配置</th>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
       </article>
-      <!-- comments-->
-      <aside id="comments" class="disqus">
-
-        <div class="container">
-          <h3><i class="icon icon-comments-o"></i> 留言回饋</h3>
-          <div id="disqus_thread"></div>
-
-          <script type="text/javascript">
-            var disqus_shortname = '{{ site.disqus_shortname }}';
-            var disqus_identifier = '/pets-<?php echo $thisPet->info['id']?>';
-            var disqus_title = '<?php echo $pageTitle;?>';
-            var disqus_url = '{{ site.url }}/pets-<?php echo $thisPet->info['id']?>/';
-            /*var disqus_developer = 1;*/
-
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-          </script>
-
-          <noscript>
-            請啟用 JavaScript，用以瀏覽來自 <a href="https://disqus.com/?ref_noscript" rel="nofollow">Disqus技術支援的留言</a>
-          </noscript>
-        </div>
-
-      </aside>
+      <?=$pageComments;?>
       {% include footer.html %}
     </main>
   </body>
 </html>
-<span class="pagetimer"><?php $pageTimer->Stop();$pageTimer->BenchTxt();?></span>
+
+<script type="text/javascript" src="/js/jslib/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/lib/js_pets.js"></script>
+<script type="text/javascript" src="/js/savar.js"></script>
+<script type="text/javascript" src="/js/appendPetsImgIcon.js"></script>
+<script language="JavaScript" src="{{ '/js/petsInfoUse.js' | prepend: site.baseurl }}"></script>
+<script language="JavaScript">
+  /*claim pets data*/
+  var valStartLV=<?php echo $thisPet->showStartLV();?>;
+  var valStart=[<?php echo implode($thisPet->pwr['start'],',');?>];
+  var valMin=[<?php echo implode($thisPet->pwr['min'],',');?>];
+  var valMax=[<?php echo implode($thisPet->pwr['max'],',');?>];
+
+  window.addEventListener('load',function(){
+    /*偵測有無支援JS*/
+    indisplayNoJSAlert('js-no-script');
+
+    /*自動帶入最大值*/
+    insertVal(<?php echo implode($thisPet->pwr['max'],',');?>);
+
+    /*自動全選輸入欄*/
+    autoSelectInput();
+
+    /*自動計算*/
+    hookInputChange();
+
+    /*偵測選單改變*/
+    window.document.getElementsByClassName('pet_pwr_now')[0].addEventListener('change', function(){
+      var chk = document.getElementsByClassName('pet_pwr_now')[0].value;
+      /*依據選擇類型改變*/
+      switch (chk) {
+        case 'max':
+          insertVal(valMax[0],valMax[1],valMax[2],valMax[3]);
+          break;
+        case 'min':
+          insertVal(valMin[0],valMin[1],valMin[2],valMin[3]);
+          break;
+      };
+    });
+  });
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    var TeamType = ['泛用','競技場','冒險','討伐','討伐首領','突襲戰','部落遠征'];
+    for(var i=0; i<TeamType.length ; i++){
+        var row = $('<option>').attr('value',i).append(TeamType[i]);
+        $('#searchtype').append(row);
+    }
+    $('#searchtype').prepend($('<option>').attr('value','-1').append('請選擇'));
+
+    function TeamQueryByType(val) {
+        table.search(val).draw();
+    }
+
+    var table2 = $('#petsSeries').DataTable({
+      "responsive": true,
+      "paging": false,
+      "info": false
+    });
+
+    var table = $('#team-list').DataTable({
+        "responsive": true,
+        "processing": true,
+        "serverSide": true,
+        "ajax": '/lib/json_teamlist.php?pets=<?=$thisPet->info['id']?>',
+        "scrollY": "300px",
+        "paging": 10,
+        "pagingType": "full_numbers",
+        "oLanguage": {
+            "sLengthMenu": "",
+            "sZeroRecords": "查無隊伍組合建議。",
+            "sInfo": "共 _MAX_ 筆",
+            "sSearch": "搜尋",
+            "sInfoFiltered": "找到 _TOTAL_ 筆 資料",
+            "sInfoEmpty": "共 0 頁",
+            "oPaginate": {
+                "sPrevious": "«",
+                "sNext": "»",
+                "sFirst": "第一筆",
+                "sLast": "最後一筆",
+            }
+        },
+        "drawCallback": function(){loopSpan();}
+    });
+
+    $('#searchtype').bind('change', function(){
+        TeamQueryByType($(this).val()+'=');
+    });
+
+    $('#searchtext').bind('keyup click', function(){
+        TeamQueryByType($(this).val());
+    });
+
+});
+</script>

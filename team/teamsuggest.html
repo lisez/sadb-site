@@ -1,0 +1,452 @@
+---
+layout: page
+title: "提供隊伍"
+permalink: /team/suggest/
+comments: false
+---
+
+<style type="text/css">
+	code {
+		display: inline-block;
+		margin: 2px 2px 2px 2px;
+		padding: 2px 2px 2px 2px;
+		background-color: #EEE;
+		border: 1px solid black;
+	}
+	div.pool-of-trainers .pets-series-thumbnails:hover, #pool-of-team-pets .pets-series-thumbnails:hover{
+		border: 3px solid red;
+	}
+	.img-delbtn{
+		width: 25px;
+	}
+	.img-delbtn:hover{
+		border-radius: 6px;
+		width: 40px;
+	}
+	.team-cell{
+		margin: 10px 10px 10px 10px;
+		display: inline-block;
+		text-align: center;
+		align-items: center;
+	}
+	.img-con{
+		display: inline-block;
+	}
+</style>
+<style>
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    -webkit-animation-name: fadeIn; /* Fade in the background */
+    -webkit-animation-duration: 0.4s;
+    animation-name: fadeIn;
+    animation-duration: 0.4s
+}
+
+/* Modal Content */
+.modal-content {
+    position: fixed;
+    bottom: 50%;
+    background-color: #fefefe;
+    width: 100%;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideIn;
+    animation-duration: 0.4s
+}
+
+/* The Close Button */
+.close {
+    color: black;
+    float: right;
+    margin-right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: grey;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+.modal-body {padding: 2px 16px;}
+
+.modal-footer {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+}
+
+/* Add Animation */
+@-webkit-keyframes slideIn {
+    from {bottom: -300px; opacity: 0}
+    to {bottom: 0; opacity: 1}
+}
+
+@keyframes slideIn {
+    from {bottom: -300px; opacity: 0}
+    to {bottom: 0; opacity: 1}
+}
+
+@-webkit-keyframes fadeIn {
+    from {opacity: 0}
+    to {opacity: 1}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0}
+    to {opacity: 1}
+}
+</style>
+
+
+<form class="form-horizontal" id="team-suggest" method="post" action="/lib/suggestteam.php">
+<input name="thething" id="thething" type="hidden">
+
+<div class="row">
+	<div class="col-xs-12 col-md-6">
+		<fieldset>
+			<legend>基本資料</legend>
+			<p>最大長度為20字元，超過部分將被省略</p>
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="team-provider">提供者</label>
+				<input id="team-provider" name="team-provider" type="text" placeholder="請輸入提供者" class="form-control input-md" required>
+			</div>
+			<!--
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="team-name">隊伍名稱</label>
+				<div class="col-md-4">
+					<input id="team-name" name="team-name" type="text" placeholder="請命名此隊伍組合" class="form-control input-md" required>
+				</div>
+			</div>
+			-->
+		</fieldset>
+	</div>
+	<div class="col-xs-12 col-md-6">
+		<fieldset id="team-solution-type">
+			<legend>適用場合</legend>
+			<div class="form-group">
+				<div class="radio">
+					<label for="team-type-other">
+						<input type="radio" name="team-type" id="team-type-other" value="0" checked>
+						泛用
+					</label>
+				</div>
+				<div class="radio">
+					<label for="team-type-arena">
+						<input type="radio" name="team-type" id="team-type-arena" value="1">
+						競技場
+					</label>
+				</div>
+				<div class="radio">
+					<label for="team-type-adventure">
+						<input type="radio" name="team-type" id="team-type-adventure" value="2">
+						冒險
+					</label>
+					<select id="team-type-adventure-mode" name="team-type-adventure-mode">
+						<option value="-1" checked>請選擇</option>
+						<option value="0">冒險之章</option>
+						<option value="1">苦難之章</option>
+						<option value="2">外傳</option>
+					</select>
+					<select id="team-type-adventure-chapter" name="team-type-adventure-chapter"></select>-
+					<select id="team-type-adventure-section" name="team-type-adventure-section"></select>
+
+				</div>
+				<div class="radio">
+					<label for="team-type-raid">
+						<input type="radio" name="team-type" id="team-type-raid" value="3">
+						討伐
+					</label>
+					<select id="team-type-raid-chapter" name="team-type-raid-chapter"></select>-
+					<select id="team-type-raid-section" name="team-type-raid-section"></select>
+				</div>
+				<div class="radio">
+					<label for="team-type-raidboss">
+						<input type="radio" name="team-type" id="team-type-raidboss" value="4">
+						討伐首領
+					</label>
+					<select id="team-type-raidboss-battle" name="team-type-raidboss-battle" class="form-control"></select>
+				</div>
+				<div class="radio">
+					<label for="team-type-encounter">
+						<input type="radio" name="team-type" id="team-type-encounter" value="5">
+						突襲戰
+					</label>
+					<select id="team-type-encounter-type" name="team-type-encounter-type" class="form-control"></select>
+				</div>
+				<div class="radio">
+					<label for="team-type-conquest">
+						<input type="radio" name="team-type" id="team-type-conquest" value="6">
+						部落遠征
+					</label>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+</div>
+
+<div class="row">
+	<fieldset id="now-team-set">
+		<legend>隊伍配置</legend>
+		<input type="hidden" name="the-team-set" id="the-team-set">
+		<p>請至少選取<strong>騎乘寵物以及前排中央寵物</strong></p>
+		<div class="col-xs-12 col-md-6">
+			<fieldset>
+				<legend>訓練師</legend>
+				<div class="pool-of-trainers"></div>
+			</fieldset>
+		</div>
+
+		<div class="col-xs-12 col-md-6">
+			<fieldset>
+				<legend>寵物</legend>
+				<div class="form-group">
+					<label class="radio-inline" for="team-set-pos-1">
+						<input type="radio" name="team-set-pos" id="team-set-pos-1" value="1">
+						後排／騎乘寵物
+					</label>
+					<label class="radio-inline" for="team-set-pos-2">
+						<input type="radio" name="team-set-pos" id="team-set-pos-2" value="2">
+						前排中央／坦位
+					</label>
+					<label class="radio-inline" for="team-set-pos-3">
+						<input type="radio" name="team-set-pos" id="team-set-pos-3" value="3">
+						前排左右／進攻
+					</label>
+					<label class="radio-inline" for="team-set-pos-4">
+						<input type="radio" name="team-set-pos" id="team-set-pos-4" value="5">
+						待命與友人寵物（最多2）
+					</label>
+				</div>
+				<div id="pool-of-team-options">
+					<span><select id="select-pets-rarity"></select></span>
+					<span><select id="select-pets-by-rarity"></select></span>
+				</div>
+				<div id="pool-of-team-pets"></div>
+			</fieldset>
+		</div>
+
+		<div class="col-xs-12 col-md-12">
+			<fieldset>
+				<legend>目前配置</legend>
+				<div>
+					<button id="team-wipe" name="team-wipe" class="btn btn-primary" type="button" onclick="delFromTeamSet(-1,'#pool-of-now-team')"><img src="/assets/images/delete.svg" class="img-delbtn">清除隊伍</button>
+				</div>
+				<div id="pool-of-now-team" class="team-set-cell-pool"></div>
+			</fieldset>
+		</div>
+	</fieldset>
+</div>
+
+<div class="row">
+<fieldset>
+	<legend>說明介紹</legend>
+	<div class="page-help info">
+		<p>目前伺服器商基於安全性考量，限制HTML標籤傳輸。為避免產生伺服器沒有回應，請盡量避免使用敏感的HTML標籤。</p>
+		<p>換行符號將自動轉譯。</p>
+	</div>
+	<div>
+		<ul>
+			<li>例如介紹配置寵物取得方式、使用說明、應對場合、應對技巧、特殊因應方式等等，或者其他得以讓其他人認識此隊伍組合之內容。</li>
+			<!--<li>未使用下列合法的HTML標籤時，例如<code>img</code>插入圖片、<code>a</code>插入連結等，該標籤內的內容將自動排除。</li>
+			<li><div id="display-allow-tags">合法的HTML標籤：</div></li>-->
+		</ul>
+	</div>
+	<hr>
+	<div class="form-group">
+		<input type="hidden" name="team-interview-data" id="team-interview-data">
+		<textarea class="form-control" id="team-interview" name="team-interview" placeholder="介紹配置寵物取得方式、使用說明、應對場合、應對技巧、特殊因應方式等等，足以讓其他人認識此隊伍組合之內容" style="-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;height: 300px"></textarea>
+	</div>
+</fieldset>
+</div>
+
+<div class="form-group">
+	<button id="team-submit" name="team-submit" class="btn btn-primary" type="submit"><img src="/assets/images/file.svg" class="img-delbtn">遞交隊伍</button>
+</div>
+
+
+</form>
+
+<!--<script type="text/javascript" src="/js/jslib/ckeditor/ckeditor.js"></script><script>CKEDITOR.replace('team-interview');</script>-->
+<script type="text/javascript" src="/js/savar.js"></script>
+<script type="text/javascript" src="/lib/js_pets.js"></script>
+<script type="text/javascript" src="/lib/js_raidboss.js"></script>
+<script type="text/javascript" src="/js/teamsuggest.js"></script>
+<script type="text/javascript">
+/*performance time start*/
+console.time('test');
+/*filtering pets*/
+var skipElement = ['地地','水水','火火','風風'];
+var displayPets = $.grep(getAllPets, function(i,v){return i.r!=0&&skipElement.indexOf(i.e)==-1;});
+var allowTag = ['div','span','br','p','pre','blockquote','q','hr','table','td','th','tbody','thead','tfoot','font','b','strong','s','i','big','small','tt','code','samp','var','del','cite','ins','h1','h2','h3','h4','h5','h6','ul','ol','li'];
+
+/*append raidboss*/
+function appendRaidBoss(parent) {
+	for(var b=0;b<Object.keys(bossData).length;b++){
+      var row = $('<option>').attr('value',bossData[b].id).append(bossData[b].name);
+      $(parent).append(row);
+	}
+  	var plzSelected = $('<option>').attr({'value':'-1','selected':true}).append('請選擇');
+  	$(parent).prepend(plzSelected);
+}
+
+/*chk val*/
+function chkSelVal(target, value) {
+	if($(target).val()==value)return true;
+	return false;
+}
+
+$(document).ready(function(){
+	/*append select options*/
+	appendOptions('#team-type-adventure-chapter,#team-type-raid-chapter','',saChapter);
+	appendOptions('#team-type-adventure-section','',saChapterSection);
+	appendOptions('#team-type-raid-section','',saRaidSection);
+	appendOptions('#team-type-encounter-type','',saEncounter);
+	appendRaidBoss('#team-type-raidboss-battle');
+
+	/*add allow tags into help*/
+	allowTag.forEach(function(el){
+		var row=$('<code>').append(el);
+		$('#display-allow-tags').append(row);
+	});
+
+	/*Rarity of pets and its series*/
+	appendOptions('#select-pets-rarity','',petsRarityLabel);
+	$('input[type=radio][name=team-set-pos]').bind('change',function(){
+		/*$('#pool-of-team-pets').empty();*/
+		appendPetsSeriesOptions();
+	});
+	$('#select-pets-rarity').bind('change', function(){
+		/*$('#pool-of-team-pets').empty();*/
+		var selVal = parseInt($(this).val())+1;
+		appendPetsSeriesOptions(selVal);
+	});
+	$('#select-pets-by-rarity').bind('change', function(){
+	$('#pool-of-team-pets').empty();
+	var petPos = $('input[name=team-set-pos]:checked').val();
+	var selRarity = parseInt($('#select-pets-rarity').val());
+	var selVal = $('#select-pets-by-rarity option:selected').text().toString();
+	var petsRaw = $.grep(displayPets, function(i,v){return i.r!=0&&i.s==selVal;});
+	var PetsImgByRarity = new appendImgIcon(petsRaw);
+	PetsImgByRarity.BaseUrl='http://i.imgbox.com/';
+	PetsImgByRarity.AppendMultiImg('#pool-of-team-pets','pets-series-thumbnails img-rounded');
+	rebindImgIcon();
+	});
+
+	/*append Trainers icon img*/
+	var TrainersImg = new appendImgIcon(saTrainer);
+	TrainersImg.AppendMultiImg('.pool-of-trainers','pets-series-thumbnails img-rounded');
+
+	/*append to team settings*/
+	$('#now-team-set div.pool-of-trainers div.img-con').click(function(){
+		if(nowTeamSet[0]!=false && nowTeamSet[0])return false;
+		nowTeamSet[0]=parseInt($(this).data('id'));
+		displayTeamSet(nowTeamSet,'#pool-of-now-team');
+	});
+
+	/*dsiabled position*/
+	$('#team-solution-type input[type=radio]').bind('click', function(){
+		var selVal = parseInt($(this).val());
+		if(selVal==3 || selVal==4){
+			$('#team-set-pos-3').attr('disabled', true);
+			$('#team-set-pos-3').prop('checked', false);
+		}else{
+			$('#team-set-pos-3').attr('disabled', false);
+		}
+	});
+
+	/*submit form data*/
+	$('#team-suggest').bind('submit', function(){
+		/*set error function*/
+		var error=$('<ul>');
+		var errNum =0;
+		if($('#team-provider').length===0){
+			error.append($('<li>').append('請輸入提供者'));
+			errNum+=1;
+		};
+
+		/*other*/
+		var ttype = $('#team-solution-type input[type=radio]:checked');
+		var selNone = false;
+		var selCol = [	'#team-type-adventure-mode,#team-type-adventure-chapter,#team-type-adventure-section',
+						'#team-type-raid-chapter,#team-type-raid-section',
+						'#team-type-raidboss-battle',
+						'#team-type-encounter-type'];
+		var tar = parseInt(ttype.val())-2;
+		$(selCol[tar]).each(function(){
+			if($(this).val()==-1){
+				error.append($('<li>').append('請選擇'+ttype.parent().text().trim()+'的子項目選項'));
+				errNum+=1;
+			}
+		});
+
+		if(!nowTeamSet[1] || !nowTeamSet[2]){
+			error.append($('<li>').append('請至少選取騎乘寵物以及前排中央寵物'));
+			errNum+=1;
+		}
+		if(errNum!=0){
+			var msghd = $('<h1>').append('請再次詳查表單');
+			var msgnum = $('<h2>').append('共有 '+errNum+ '處需要重新檢查');
+			error.prepend(msgnum);
+			error.prepend(msghd);
+			displayDivMessage(error);
+			return false;
+		}
+		/*if form valid*/
+		$('#thething').val(1);
+		$('#the-team-set').val(nowTeamSet.join(','));
+
+		/*set cke*/
+		/*var raw = $('#team-interview').val();
+		var stripHTML= raw.replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+		$('#team-interview').val(stripHTML);*/
+        /*CKEDITOR.instances['team-interview'].updateElement();*/
+
+		var posting = $.ajax({
+			type: 'POST',
+			url: '/lib/suggestteam.php',
+			data: $('#team-suggest').serialize(),
+			dataType: 'text',
+			timeout: 10000,
+			async: true,
+			success: function(r){
+				var msg = JSON.parse(r);
+				var header = $('<div>').append($('<h1>').append(msg['msg']));
+				if(msg['status']==1){
+					var content = $('<p>').append('資料金鑰：');
+					content.append($('<code>').append(msg['key']));
+					var help = $('<p>').append('用來日後增刪修改的辨識提供者依據');
+					header.append(content);
+					header.append(help);
+				}
+				displayDivMessage(header);
+			}
+		}).fail(function(jqXHR, textStatus, errorThrown){
+			var msghead = $('<div>').append($('<h1>').append('伺服器異常或繁忙中，請稍後嘗試'));
+			msghead.append('伺服器訊息：['+textStatus+']'+errorThrown);
+			displayDivMessage(msghead);
+			console.log(jqXHR, textStatus, errorThrown);
+		});
+		return false;
+	});
+
+});
+console.timeEnd('test');
+</script>
