@@ -2,6 +2,10 @@
 //檔案類型
 header('Content-Type: application/javascript; charset=utf-8;');
 
+//失效期間
+date_default_timezone_set('Asia/Taipei');
+header('Expires: '. date("D, d M Y H:i:s", mktime(0,0,0, 10, 13, 2016)) . ' UTC+8');
+
 //載入設定
 require_once('lqsym.php');
 require_once('misc.php');
