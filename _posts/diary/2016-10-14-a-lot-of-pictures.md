@@ -78,7 +78,7 @@ category: diary
 
 輸出可見一斑的可怕，這根本就是滅團的節奏嘛
 
-!(結果最後竟然拼死到20回合讓王倒下了)[http://i.imgur.com/97GBUHc.jpg]
+![結果最後竟然拼死到20回合讓王倒下了](http://i.imgur.com/97GBUHc.jpg)
 
 結果最後竟然拼死到20回合，讓王倒下了！！！！
 
