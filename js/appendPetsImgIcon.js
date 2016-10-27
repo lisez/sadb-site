@@ -53,3 +53,29 @@ function loopSpan() {
 		$(this).append(thing);
 	});
 }
+
+function loopSpanByDOM(dom) {
+
+	$(dom+' .add-icon-list').each(function(i,v){
+		var list = $(this).data('query-id').toString().split(',');
+		for(var i=0; i<list.length; i++){
+			if(list[i]==0 || list[i]=='undefined')continue;
+			var thing = parseInt(list[i]);
+			if(i==0){
+				$(this).append(appendTrainerImg(thing));
+			}else{
+				$(this).append(appendPetsImg(thing));
+			}
+		}
+	});
+
+	$(dom+' .add-pet-img').each(function(i){
+		var thing = appendPetsImg($(this).data('query-id'));
+		$(this).append(thing);
+	});
+
+	$(dom+' .add-trainers-img').each(function(i){
+		var thing = appendTrainerImg($(this).data('query-id'));
+		$(this).append(thing);
+	});
+}

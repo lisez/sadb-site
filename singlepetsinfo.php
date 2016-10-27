@@ -224,10 +224,10 @@ foreach ($pagePetsMix as $key => $value) {
 
   $output = '<tr>
   <th>%s</th>
-  <th><span class="add-icon-list" data-query-id="0,%s"></span><span>%s</span></th>
-  <th><span class="add-icon-list" data-query-id="0,%s"></span><span>%s</span></th>
+  <th><span class="add-pet-img" data-query-id="%s"></span><span>%s</span></th>
+  <th><span class="add-pet-img" data-query-id="%s"></span><span>%s</span></th>
   <th><span><img src="%s"></span><span>%s</span></th>
-  <th><span class="add-icon-list" data-query-id="0,%s"></span></th>
+  <th><span class="add-pet-img" data-query-id="%s"></span></th>
 </tr>';
 
   echo sprintf($output, $key+1, 
@@ -262,7 +262,7 @@ foreach ($pagePetsMix as $key => $value) {
     <script type="text/javascript" src="/js/jslib/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="/lib/js_pets.js?<?=$moddate;?>"></script>
     <script type="text/javascript" src="/js/savar.js"></script>
-    <script type="text/javascript" src="/js/appendPetsImgIcon.js"></script>
+    <script type="text/javascript" src="/js/appendPetsImgIcon.js?<?=$moddate;?>"></script>
     <script language="JavaScript" src="{{ '/js/petsInfoUse.js' | prepend: site.baseurl }}"></script>
     <script language="JavaScript">
       /*claim pets data*/
@@ -347,7 +347,7 @@ foreach ($pagePetsMix as $key => $value) {
                     "sLast": "最後一筆",
                 }
             },
-            "drawCallback": function(){loopSpan();}
+            "drawCallback": function(){loopSpanByDOM('#team-list');}
         });
 
         $('#searchtype').bind('change', function(){
@@ -358,6 +358,7 @@ foreach ($pagePetsMix as $key => $value) {
             TeamQueryByType($(this).val());
         });
 
+        loopSpanByDOM('#mix-pets-list');
     });
     </script>
   </body>
