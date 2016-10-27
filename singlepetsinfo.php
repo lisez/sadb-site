@@ -3,9 +3,11 @@ layout: compress
 php: "true"
 comments: true
 ---
-
-<?php include_once('lib/inc_singlepet.php');?>
-<?php include_once('lib/inc_comments.php');?>
+<?php 
+$moddate = '20161027';
+include_once('lib/inc_singlepet.php');
+include_once('lib/inc_comments.php');
+?>
 <!DOCTYPE html>
 <html>
   {% include head.html %}
@@ -129,18 +131,15 @@ comments: true
           <!-- 技能資料-->
           <div class="row">
             <div class="div-table">
+              <div class="div-table-tr">
+                <div class="div-table-th" style="width:2em;">#</div>
+                <div class="div-table-th" style="width:6em;">技能</div>
+                <div class="div-table-th" style="width:4em;">氣力</div>
+                <div class="div-table-th">效果</div>
+              </div>
 <?php
 /*格式化技能陣列*/
 $_SkillRow   = Array('active','pas1','pas2','pas3');
-
-/*HTML Code*/
-echo $htmlSkillTitle=
-'<div class="div-table-tr">
-  <div class="div-table-th" style="width:2em;">#</div>
-  <div class="div-table-th" style="width:6em;">技能</div>
-  <div class="div-table-th" style="width:4em;">氣力</div>
-  <div class="div-table-th">效果</div>
-</div>';
 
 $htmlSkillRow =
 "<div class=\"div-table-tr\">
@@ -191,6 +190,57 @@ foreach ($_SkillRow as $value) {
               </tbody>
             </table>
         </div>
+        <!-- pets mix -->
+        <div class="row">
+          <hr>
+          <table id="mix-pets-list">
+            <thead>
+              <th style="width: 10%;">#</th>
+              <th>組合材料1</th>
+              <th>組合材料2</th>
+              <th>覺醒石</th>
+              <th>結果</th>
+            </thead>
+            <tbody>
+<?php
+
+$stoneAryLV = array(
+  '下' => '1',
+  '中' => '2',
+  '上' => '3',
+  );
+$stoneAryELE = array(
+  '地' => 'earth',
+  '水' => 'water',
+  '火' => 'fire',
+  '風' => 'wind',
+  );
+
+foreach ($pagePetsMix as $key => $value) {
+  $theStoneELE = $stoneAryELE[mb_substr($value['mix_mat3_id'],1,1)];
+  $theStoneLV = $stoneAryLV[mb_substr($value['mix_mat3_id'],0,1)];
+  $theStone = $theStoneELE . '_' . $theStoneLV;
+  $theStoneImg = '/assets/images/sa/stones/'. $theStone .'_50.png';
+
+  $output = '<tr>
+  <th>%s</th>
+  <th><span class="add-icon-list" data-query-id="0,%s"></span><span>%s</span></th>
+  <th><span class="add-icon-list" data-query-id="0,%s"></span><span>%s</span></th>
+  <th><span><img src="%s"></span><span>%s</span></th>
+  <th><span class="add-icon-list" data-query-id="0,%s"></span></th>
+</tr>';
+
+  echo sprintf($output, $key+1, 
+                        $value['mix_mat1_id'], ' × ' . $value['mix_mat1_cnt'],
+                        $value['mix_mat2_id'], ' × ' . $value['mix_mat2_cnt'],
+                        $theStoneImg, ' × ' . $value['mix_mat3_cnt'],
+                        $value['mix_rlt']);
+
+}
+?>
+            </tbody>
+          </table>
+        </div>
         <!-- team suggest-->
         <div class="row">
           <hr>
@@ -209,100 +259,106 @@ foreach ($_SkillRow as $value) {
       <?=$pageComments;?>
       {% include footer.html %}
     </main>
+    <script type="text/javascript" src="/js/jslib/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/lib/js_pets.js?<?=$moddate;?>"></script>
+    <script type="text/javascript" src="/js/savar.js"></script>
+    <script type="text/javascript" src="/js/appendPetsImgIcon.js"></script>
+    <script language="JavaScript" src="{{ '/js/petsInfoUse.js' | prepend: site.baseurl }}"></script>
+    <script language="JavaScript">
+      /*claim pets data*/
+      var valStartLV=<?php echo $thisPet->showStartLV();?>;
+      var valStart=[<?php echo implode($thisPet->pwr['start'],',');?>];
+      var valMin=[<?php echo implode($thisPet->pwr['min'],',');?>];
+      var valMax=[<?php echo implode($thisPet->pwr['max'],',');?>];
+
+      window.addEventListener('load',function(){
+        /*偵測有無支援JS*/
+        indisplayNoJSAlert('js-no-script');
+
+        /*自動帶入最大值*/
+        insertVal(<?php echo implode($thisPet->pwr['max'],',');?>);
+
+        /*自動全選輸入欄*/
+        autoSelectInput();
+
+        /*自動計算*/
+        hookInputChange();
+
+        /*偵測選單改變*/
+        window.document.getElementsByClassName('pet_pwr_now')[0].addEventListener('change', function(){
+          var chk = document.getElementsByClassName('pet_pwr_now')[0].value;
+          /*依據選擇類型改變*/
+          switch (chk) {
+            case 'max':
+              insertVal(valMax[0],valMax[1],valMax[2],valMax[3]);
+              break;
+            case 'min':
+              insertVal(valMin[0],valMin[1],valMin[2],valMin[3]);
+              break;
+          };
+        });
+      });
+    </script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        var TeamType = ['泛用','競技場','冒險','討伐','討伐首領','突襲戰','部落遠征'];
+        for(var i=0; i<TeamType.length ; i++){
+            var row = $('<option>').attr('value',i).append(TeamType[i]);
+            $('#searchtype').append(row);
+        }
+        $('#searchtype').prepend($('<option>').attr('value','-1').append('請選擇'));
+
+        function TeamQueryByType(val) {
+            table.search(val).draw();
+        }
+
+        var table3 = $('#mix-pets-list').DataTable({
+          "scrollY": "300px",
+          "responsive": true,
+          "paging": false,
+          "info": false
+        });
+
+        var table2 = $('#petsSeries').DataTable({
+          "responsive": true,
+          "paging": false,
+          "info": false
+        });
+
+        var table = $('#team-list').DataTable({
+            "responsive": true,
+            "processing": true,
+            "serverSide": true,
+            "ajax": '/lib/json_teamlist.php?pets=<?=$thisPet->info['id']?>',
+            "scrollY": "300px",
+            "paging": 10,
+            "pagingType": "full_numbers",
+            "oLanguage": {
+                "sLengthMenu": "",
+                "sZeroRecords": "查無隊伍組合建議。",
+                "sInfo": "共 _MAX_ 筆",
+                "sSearch": "搜尋",
+                "sInfoFiltered": "找到 _TOTAL_ 筆 資料",
+                "sInfoEmpty": "共 0 頁",
+                "oPaginate": {
+                    "sPrevious": "«",
+                    "sNext": "»",
+                    "sFirst": "第一筆",
+                    "sLast": "最後一筆",
+                }
+            },
+            "drawCallback": function(){loopSpan();}
+        });
+
+        $('#searchtype').bind('change', function(){
+            TeamQueryByType($(this).val()+'=');
+        });
+
+        $('#searchtext').bind('keyup click', function(){
+            TeamQueryByType($(this).val());
+        });
+
+    });
+    </script>
   </body>
 </html>
-
-<script type="text/javascript" src="/js/jslib/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="/lib/js_pets.js"></script>
-<script type="text/javascript" src="/js/savar.js"></script>
-<script type="text/javascript" src="/js/appendPetsImgIcon.js"></script>
-<script language="JavaScript" src="{{ '/js/petsInfoUse.js' | prepend: site.baseurl }}"></script>
-<script language="JavaScript">
-  /*claim pets data*/
-  var valStartLV=<?php echo $thisPet->showStartLV();?>;
-  var valStart=[<?php echo implode($thisPet->pwr['start'],',');?>];
-  var valMin=[<?php echo implode($thisPet->pwr['min'],',');?>];
-  var valMax=[<?php echo implode($thisPet->pwr['max'],',');?>];
-
-  window.addEventListener('load',function(){
-    /*偵測有無支援JS*/
-    indisplayNoJSAlert('js-no-script');
-
-    /*自動帶入最大值*/
-    insertVal(<?php echo implode($thisPet->pwr['max'],',');?>);
-
-    /*自動全選輸入欄*/
-    autoSelectInput();
-
-    /*自動計算*/
-    hookInputChange();
-
-    /*偵測選單改變*/
-    window.document.getElementsByClassName('pet_pwr_now')[0].addEventListener('change', function(){
-      var chk = document.getElementsByClassName('pet_pwr_now')[0].value;
-      /*依據選擇類型改變*/
-      switch (chk) {
-        case 'max':
-          insertVal(valMax[0],valMax[1],valMax[2],valMax[3]);
-          break;
-        case 'min':
-          insertVal(valMin[0],valMin[1],valMin[2],valMin[3]);
-          break;
-      };
-    });
-  });
-</script>
-<script type="text/javascript">
-$(document).ready(function(){
-    var TeamType = ['泛用','競技場','冒險','討伐','討伐首領','突襲戰','部落遠征'];
-    for(var i=0; i<TeamType.length ; i++){
-        var row = $('<option>').attr('value',i).append(TeamType[i]);
-        $('#searchtype').append(row);
-    }
-    $('#searchtype').prepend($('<option>').attr('value','-1').append('請選擇'));
-
-    function TeamQueryByType(val) {
-        table.search(val).draw();
-    }
-
-    var table2 = $('#petsSeries').DataTable({
-      "responsive": true,
-      "paging": false,
-      "info": false
-    });
-
-    var table = $('#team-list').DataTable({
-        "responsive": true,
-        "processing": true,
-        "serverSide": true,
-        "ajax": '/lib/json_teamlist.php?pets=<?=$thisPet->info['id']?>',
-        "scrollY": "300px",
-        "paging": 10,
-        "pagingType": "full_numbers",
-        "oLanguage": {
-            "sLengthMenu": "",
-            "sZeroRecords": "查無隊伍組合建議。",
-            "sInfo": "共 _MAX_ 筆",
-            "sSearch": "搜尋",
-            "sInfoFiltered": "找到 _TOTAL_ 筆 資料",
-            "sInfoEmpty": "共 0 頁",
-            "oPaginate": {
-                "sPrevious": "«",
-                "sNext": "»",
-                "sFirst": "第一筆",
-                "sLast": "最後一筆",
-            }
-        },
-        "drawCallback": function(){loopSpan();}
-    });
-
-    $('#searchtype').bind('change', function(){
-        TeamQueryByType($(this).val()+'=');
-    });
-
-    $('#searchtext').bind('keyup click', function(){
-        TeamQueryByType($(this).val());
-    });
-
-});
-</script>

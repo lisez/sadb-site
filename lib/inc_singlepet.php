@@ -24,13 +24,10 @@ $sadb = new DBMySQL(  $_login -> the_host(),
 /*成功連線*/
 $item = IntSafe($_GET['petsid'],0,3);
 
-$sql = Array(
-sprintf('SELECT * FROM `sadb_pets` AS `t1` INNER JOIN `sadb_pets_ref` AS `t2` ON `t2`.`pets_reaid`=`t1`.`pets_rlid` WHERE `t1`.`pets_id`=%s;', $item),
-
-sprintf('SELECT `pets_id`,`pets_reaid`,`t1`.`pets_name_cht` AS `pets_name_cht`,`t1`.`pets_rarity`,`t1`.`pets_element`, `t1`.`pets_max_hp`,`t1`.`pets_max_atk`, `t1`.`pets_max_def`, `t1`.`pets_max_spd`,`ICON` FROM `sadb_pets` AS `t1` INNER JOIN `sadb_pets_ref` AS `t2` ON `t2`.`pets_reaid`=`t1`.`pets_rlid` WHERE (`t1`.`pets_id`= %s) OR (`t1`.`pets_species`= (SELECT `pets_species` FROM `sadb_pets` WHERE `pets_id`= %s AND `t1`.`pets_rarity` != 0));', $item, $item));
+$sql = "CALL pets_search($item)";
 
 /*輸出資料*/
-$sadb_raw = $sadb -> queryMulti(implode($sql,' '));
+$sadb_raw = $sadb -> queryMulti($sql);
 $sadb_row = $sadb_raw[0][0];
 
 /*$sadb_row = $sadb->getData('MYSQLI_ASSOC');*/
@@ -156,6 +153,9 @@ $twiceEleHTML='';
 if($twiceElePet['id']!=-1){
   $twiceEleHTML=sprintf('<span class="boss-cell" style="float:right;"><a href="/pets-%s">查詢雙屬性</a></span>',$twiceElePet['id']);
 }
+
+/*處理組合寵物資料*/
+$pagePetsMix = $sadb_raw[2];
 
 /*comments*/
 $pageIdentifier = 'pets-' . $thisPet->info['id'] . '/';
