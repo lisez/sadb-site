@@ -195,13 +195,13 @@ category: gameinfo
                             <th>2</th>
                             <td>우린 누구?</td>
                             <td>1200</td>
-                            <td>以相當露西 159%攻擊力恢復我方全體寵物體力<br><strong>【當對象主屬性為水屬性】</strong> 2回合內提高防禦力 38.6%</td>
+                            <td>以相當露西 209%攻擊力恢復我方全體寵物體力<br><strong>【當對象主屬性為水屬性】</strong> 2回合內提高防禦力 38.6%</td>
                         </tr>
                         
                         <tr>
                             <th>3</th>
                             <td>괜찮을꺼야</td>
-                            <td>1400</td>
+                            <td>800</td>
                             <td>在 2回合內使我方全體免疫冰結、催眠效果<br>已陷入暈眩、石化、冰結狀態之寵物不在範圍內<br><strong>【額外效果】</strong> 在 2回合內提高防禦力 26.8%</td>
                         </tr>
                         
@@ -306,7 +306,7 @@ category: gameinfo
                             <th>4</th>
                             <td>사라의 집착</td>
                             <td>被動</td>
-                            <td><strong>【捕獲失敗時】</strong> 41.8% 機會再次嘗試對同一對象進行捕獲<br></td>
+                            <td><strong>【捕獲失敗時】</strong> 41.8% 機會再次嘗試對同一對象進行捕獲<br><strong>【回合開始時】</strong> 所騎乘寵物攻擊力提高 10.9%<br><strong>【對象屬性為火屬性時】</strong> 提高攻擊力 15.9%</td>
                         </tr>
                         
                     </tbody>
@@ -494,7 +494,7 @@ category: gameinfo
                             <th>2</th>
                             <td>밤송이 던지기</td>
                             <td>1000</td>
-                            <td>對 1隻(位)敵方造成相當 238.5%攻擊力傷害<br><strong>【額外效果】</strong> 降低對象氣力 24.75%<br><strong>【當對象主屬性為水屬性】</strong> 額外降低氣力 10%</td>
+                            <td>對 1隻(位)敵方造成相當 168.5%攻擊力傷害<br><strong>【額外效果】</strong> 降低對象氣力 24.75%<br><strong>【當對象主屬性為水屬性】</strong> 額外降低氣力 10%</td>
                         </tr>
                         
                         <tr>
@@ -602,7 +602,7 @@ category: gameinfo
                             <th>3</th>
                             <td>지나의 노래</td>
                             <td>1200</td>
-                            <td>吟詠歌唱使我方全體寵物恢復 29.75%體力<br><strong>【當對象主屬性為風屬性】</strong> 2回合內提高防禦力 34.75%</td>
+                            <td>吟詠歌唱使我方全體寵物恢復 29.75%體力<br><strong>【當對象主屬性為風屬性】</strong> 2回合內提高防禦力 34.75%<br><strong>【額外效果】</strong> 驅散目標所有異常狀態</td>
                         </tr>
                         
                         <tr>
@@ -787,7 +787,7 @@ category: gameinfo
                         <tr>
                             <th>1</th>
                             <td>나만 믿어</td>
-                            <td>800</td>
+                            <td>1000</td>
                             <td>在 2回合內提高對象防禦力 49.5%<br><strong>【額外效果】</strong> 賦予可阻擋全部傷害 1次之防護盾外效果</td>
                         </tr>
                         
