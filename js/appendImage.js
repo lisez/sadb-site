@@ -6,7 +6,7 @@ function appendImage(file, src, pos) {
 			var img = $('<img>').attr({'src':file});
 			loc.append(img);
 			$(pos).append(loc);
-			$(pos).css('display','block');
+			$(pos).css('display','inline-block');
 		},
 	});
 }
