@@ -1,0 +1,23 @@
+<script type="text/javascript" src="sadb/lib/js_pets.js"></script>
+<script type="text/javascript" src="sadb/js/jslib/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+
+var petData = getAllPets;
+
+function gachaByRarity(rarity, pool) {
+	var petList = $.grep(pool, function(i,v){
+		return i.r==rarity;
+	});
+	var petMax = petList.length;
+	var petRand = getRandNum(0, petMax-1);
+	return petList[petRand].i;
+}
+
+gachaByRarity.prototype.getRandNum = function(minNum, maxNum) {
+	return Math.round(Math.random()*(maxNum-minNum)+minNum);
+};
+
+(function(){
+	alert(gachaByRarity(5,petData));
+});
+</script>
