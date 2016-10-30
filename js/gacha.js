@@ -14,7 +14,7 @@ function gachaByRarity(rarity, pool) {
 function getTenPets(pos, pool) {
 	$(pos).empty();
 
-	var skip = ['地地','水水','火火','風風'];
+	var skip = ['地','水','火','風'];
 	var petData = $.grep(pool, function(i,v){
 		return skip.indexOf(i.e)!=-1;
 	});
