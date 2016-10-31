@@ -1,0 +1,33 @@
+---
+layout: page
+title: "神之祝福"
+comments: false
+---
+
+<section>
+  <div class="container">
+  	<div id="get-ten" style="position: relative;text-align: center;">
+		<div id="get-ten-btn" style="margin: 10px 10px 10px 10px"><button id="try-btn" style="background-color: white;border: 0px;"><img src="/assets/images/icons/egg.png"><br>來個十抽</button></div>
+		<div id="try-times"></div>
+		<div id="try-pets"></div>
+	</div>
+  </div>
+</section>
+
+<script type="text/javascript" src="/lib/js_pets.php"></script>
+<script type="text/javascript" src="/js/gacha.js?2016103101"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var clktimes=0;
+		$('#try-btn').click(function(){
+			var golden = getTenPets('#try-pets', getAllPets);
+			while(golden<7){
+				golden = getTenPets('#try-pets', getAllPets);
+				clktimes+=1;
+			}
+			var crystal = clktimes*2700;
+			$('#try-times').text('第 '+clktimes+' 次十抽，有 '+golden+' 顆金蛋，共花了 '+crystal.toLocaleString()+' 水晶');
+			return false;
+		});
+	});
+</script>
