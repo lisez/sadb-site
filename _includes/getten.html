@@ -9,14 +9,15 @@
 </section>
 
 <script type="text/javascript" src="/lib/js_pets.php"></script>
-<script type="text/javascript" src="/js/gacha.js?2016103100"></script>
+<script type="text/javascript" src="/js/gacha.js?2016103101"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		var clktimes=0;
 		$('#try-btn').click(function(){
-			getTenPets('#try-pets', getAllPets);
+			var golden = getTenPets('#try-pets', getAllPets);
 			clktimes+=1;
-			$('#try-times').text('第 '+clktimes+' 次十抽');
+			var crystal = clktimes*2700;
+			$('#try-times').text('第 '+clktimes+' 次十抽，有 '+golden+' 顆金蛋，共花了 '+crystal.toLocaleString()+' 水晶');
 			return false;
 		});
 	});

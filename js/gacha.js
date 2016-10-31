@@ -1,3 +1,7 @@
+/* by lisez
+ * v1.0.3@2016/10/31
+ */
+
 function gachaByRarity(rarity, pool) {
 	var petList = $.grep(pool, function(i,v){
 		return i.r==rarity;
@@ -12,6 +16,7 @@ function gachaByRarity(rarity, pool) {
 }
 
 function getTenPets(pos, pool) {
+	var goldegg =0;
 	$(pos).empty();
 
 	var skip = ['地','水','火','風'];
@@ -34,9 +39,11 @@ function getTenPets(pos, pool) {
 		switch(true){
 			case getPet<=10:
 				var pet = gachaByRarity(5, petData);
+				goldegg+=1;
 				break;
 			case getPet>=11 && getPet<=200:
 				var pet = gachaByRarity(4, petData);
+				goldegg+=1;
 				break;
 			default:
 				var pet = gachaByRarity(3, petData);
@@ -44,4 +51,6 @@ function getTenPets(pos, pool) {
 		}
 		$(pos).append(icon(pet[0],pet[1]));
 	}
+
+	return goldegg;
 }
