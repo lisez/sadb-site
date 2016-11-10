@@ -30,7 +30,7 @@ comments: true
   </body>
 </html>
 
-<script type="text/javascript" src="/lib/js_pets.js"></script>
+<script type="text/javascript" src="/lib/js_pets.js?20161110"></script>
 <script type="text/javascript" src="/js/savar.js"></script>
 <script type="text/javascript" src="/js/appendPetsImgIcon.js"></script>
 <script type="text/javascript">
