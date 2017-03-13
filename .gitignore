@@ -20,4 +20,4 @@ test.*
 *.rar
 *.tar
 *.zip
-lib/defines.php
+lib/defines\.php
