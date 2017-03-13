@@ -1,3 +1,5 @@
+'use strict';
+
 function d3jsAsterPlot(pieWhere, pieWidth, pieHeight, pieInnerRadius){
   theObj = this;
   theObj.width = pieWidth;

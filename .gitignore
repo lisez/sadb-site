@@ -1,4 +1,3 @@
-# 這是註解
 [Oo]bj
 [Bb]in
 [Tt]emp
@@ -14,8 +13,6 @@
 _ReSharper.*
 *.resharper
 test.*
-
-# 如果你想忽略壓縮檔或一些大檔案
 *.7z
 *.gz
 *.iso
@@ -23,3 +20,4 @@ test.*
 *.rar
 *.tar
 *.zip
+lib/defines.php

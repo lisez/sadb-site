@@ -2,6 +2,8 @@
  * sadb.lisezdb.com BY lisez
 */
 
+'use strict';
+
 var imgBaseURL = 'http://i.imgbox.com/';
 var imgLoadAry =[];
 
@@ -33,8 +35,8 @@ function drawPetsTable() {
 /*顯示*/
 drawPetsTable.prototype.display = function (pos, _w, _h) {
   /*設定大小*/
-  var totalWidth = _w;//marginOuter*2+imgOffset+imgSize,
-      totalHeight= _h;//marginOuter*2+marginInner+imgSize*2;
+  var totalWidth = _w, //marginOuter*2+imgOffset+imgSize,
+      totalHeight= _h; //marginOuter*2+marginInner+imgSize*2;
   this.renderer.resize(_w,_h);
   this.renderer.view.style.border = '1px dashed black';
   this.renderer.backgroundColor = 0x2D241B;
@@ -59,7 +61,7 @@ drawPetsTable.prototype.drawText = function(txt,_x,_y,_size,_color) {
   this.container.addChild(genTxt);
   /*釋放*/
   drawPetsTable.free(genTxt);
-}
+};
 
 /*載入圖片*/
 drawPetsTable.initImg = function (_url) {
@@ -101,16 +103,16 @@ drawPetsTable.prototype.drawImg = function(_url,_x,_y) {
     theCon.addChild(icon);
     theRen.render(theCon);
   }
-}
+};
 
 /*釋放*/
 drawPetsTable.free = function(obj) {
-  obj=null; delete obj;
+  obj=null;
   return true;
-}
+};
 
 /*清理釋放*/
 drawPetsTable.prototype.release = function() {
   this.renderer.destory;
   PIXI.WebGLRenderer.reset;
-}
+};

@@ -2,6 +2,8 @@
  * sadb.lisezdb.com BY lisez
 */
 
+'use strict';
+
 var teamArray=[
   [-1,[0,0,0,0]],
   [-1,[0,0,0,0]],
@@ -17,6 +19,7 @@ function appendAryImg(url/*isArray*/,fromwhere,pos/*isElementId*/,sel,num){
   var selType = $('<select>').attr({'id':'selPoolByType'});
   var selTypeValue = [0,0,39,117,182,258,284];
   var selTypeLabel = ['請選擇','傳說','英雄','稀有','高級','普通','新寵物'];
+
   for (var i = 0; i < selTypeValue.length; i++) {
     selType.append(
       $('<option>').attr({'value':selTypeValue[i]}).append(selTypeLabel[i])
@@ -29,14 +32,14 @@ function appendAryImg(url/*isArray*/,fromwhere,pos/*isElementId*/,sel,num){
   if(typeof num=='undefined')num=0;
   $('#'+pos).empty();
   selType.appendTo('#'+pos);
-  if((num-20)>=0)prevPage.appendTo('#'+pos);
+  if(num-20 >= 0) prevPage.appendTo('#'+pos);
 
-  for (var i = num; i < (num+20); i++) {
+  for (var i = num; i < num+20; i++) {
     if(typeof url[i]=='undefined')continue;
     var row=$('<div>').attr({
       'class':'gentable-cells '+sel,
       'data-icon-id':i,
-      'onclick':'void(0)',
+      'onclick':'void(0)'
     });
     var rowCell=$('<img>').attr({
       'name':i,
@@ -47,15 +50,15 @@ function appendAryImg(url/*isArray*/,fromwhere,pos/*isElementId*/,sel,num){
     row.appendTo('#'+pos);
   }
 
-  if((num+20)<url.length)nextPage.appendTo('#'+pos);
+  if(num + 20 < url.length)nextPage.appendTo('#'+pos);
 
   doAction(fromwhere);
 
   $('#selPoolToNext').click(function(){
-    appendAryImg(url,fromwhere,pos,sel,(num+20));
+    appendAryImg(url, fromwhere, pos, sel, num+20);
   });
   $('#selPoolToPrev').click(function(){
-    appendAryImg(url,fromwhere,pos,sel,(num-20));
+    appendAryImg(url, fromwhere, pos, sel, num-20);
   });
 
   $('#selPoolByType').change(function(){
@@ -109,7 +112,7 @@ function addOptions(id, towhere) {
   var button = $('<input>').attr({
     'type':'button',
     'id':'submitOptions',
-    'value':'確認',
+    'value':'確認'
   });
 
   row.append(button);
@@ -127,7 +130,7 @@ function submitSkills(loc) {
   var toWhereTxt = $('#icon-skill-list'+loc);
   var toWhereImg = $('.general-block[data-team-pos='+loc+']>img');
   var skillLabel=['①','②','③','④'];
-  var iconID = $('.selectOne').data('icon-id');
+  // var iconID = $('.selectOne').data('icon-id');
   /*清除目前資料*/
   toWhereTxt.remove();
   toWhereImg.remove();

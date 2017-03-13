@@ -1,3 +1,4 @@
+'use strict';
 var saChapter			= 8;
 var saChapterSection	= 10;
 var saRaidSection		= 4;

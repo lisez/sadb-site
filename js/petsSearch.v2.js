@@ -2,6 +2,8 @@
  * v2.0.2
  */
 
+'use strict';
+
 var allpets = getAllPets;
 
 /*寵物種類篩選*/

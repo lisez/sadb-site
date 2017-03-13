@@ -2,6 +2,8 @@
  * v1.1.0
  */
 
+'use strict';
+
 /*寵物種類篩選*/
 function petsFilter(type) {
   /*寵物種類索引 */
@@ -43,7 +45,7 @@ function petsFilter(type) {
     /*連線錯誤時*/
     .fail(function(j,s,e) {
       var err = s + ", " + e;
-      console.log( "Request Failed: " + err );
+      console.warn( "Request Failed: " + err );
     });
 }
 
