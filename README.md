@@ -1,6 +1,6 @@
 # Stone Age: Origins Database
 
-link: [sadb.lisezdb.com](sadb.lisezdb.com)
+link: [https://sadb.lisezdb.com](https://sadb.lisezdb.com)
 
 It is my first site and based on Jekyll, vanilla JS, jQuery, PHP and MySQL.
 
