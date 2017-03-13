@@ -1,15 +1,9 @@
-# Thinkspace v1
+# Stone Age: Origins Database
 
-Just another minimalist Jekyll theme that focuses on technical writing. Designed for engineers to write their ranting and findings.
+link: [sadb.lisezdb.com](sadb.lisezdb.com)
 
-[**Demo**](http://heiswayi.github.io/thinkspace/)
+It is my first site and based on Jekyll, vanilla JS, jQuery, PHP and MySQL.
 
-[**Here is how to download/use this theme**](http://heiswayi.github.io/thinkspace/2016/how-to-download-or-use-this-theme/)
+It is a site for Android game 'Stone Age: Origins' and has been worked between June 2016 to Dec 2016. Now is no longer to update, because I am busy with my bar exam and L.L.M..
 
-### Screenshot
-
-![Screenshot](http://i.imgur.com/WHcnbYF.png)
-
-### License
-
-[MIT](LICENSE.md)
+From now on my opinion, hmm, this site has many technical debt.
