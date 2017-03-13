@@ -20,4 +20,7 @@ test.*
 *.rar
 *.tar
 *.zip
+#special file
 lib/defines\.php
+BingSiteAuth\.xml
+baidu_verify_f0yTi13DzI\.html
